@@ -1,0 +1,138 @@
+class Splash {
+  // show splash
+  function void show() {
+    // Clear the screen and set color
+    do Screen.setColor(true);
+
+    // Draw "FLAPPY BIRD"
+    // F
+    do Screen.drawRectangle(27, 18, 36, 27);  // Vertical line
+    do Screen.drawRectangle(36, 18, 45, 27);
+    do Screen.drawRectangle(45, 18, 54, 27);
+    do Screen.drawRectangle(27, 27, 36, 36);  // Horizontal top bar
+    do Screen.drawRectangle(36, 27, 45, 36);
+    do Screen.drawRectangle(45, 27, 54, 36);
+    do Screen.drawRectangle(27, 36, 36, 45);  // Horizontal middle bar
+    do Screen.drawRectangle(36, 36, 45, 45);
+
+    // L
+    do Screen.drawRectangle(72, 18, 81, 27);  // Vertical line
+    do Screen.drawRectangle(72, 27, 81, 36);
+    do Screen.drawRectangle(72, 36, 81, 45);
+    do Screen.drawRectangle(72, 45, 81, 54);
+    do Screen.drawRectangle(72, 54, 81, 63);
+    do Screen.drawRectangle(72, 63, 81, 72);
+    do Screen.drawRectangle(72, 72, 81, 81);
+    do Screen.drawRectangle(72, 81, 90, 90);  // Bottom horizontal bar
+    do Screen.drawRectangle(81, 81, 90, 90);
+
+    // A
+    do Screen.drawRectangle(108, 18, 117, 27);  // Left vertical line
+    do Screen.drawRectangle(108, 27, 117, 36);
+    do Screen.drawRectangle(108, 36, 117, 45);
+    do Screen.drawRectangle(108, 45, 117, 54);
+    do Screen.drawRectangle(108, 54, 117, 63);
+    do Screen.drawRectangle(126, 18, 135, 27);  // Right vertical line
+    do Screen.drawRectangle(126, 27, 135, 36);
+    do Screen.drawRectangle(126, 36, 135, 45);
+    do Screen.drawRectangle(126, 45, 135, 54);
+    do Screen.drawRectangle(126, 54, 135, 63);
+    do Screen.drawRectangle(108, 36, 117, 45);  // Middle horizontal bar
+    do Screen.drawRectangle(117, 36, 126, 45);
+
+    // P
+    do Screen.drawRectangle(144, 18, 153, 27);  // Vertical line
+    do Screen.drawRectangle(144, 27, 153, 36);
+    do Screen.drawRectangle(144, 36, 153, 45);
+    do Screen.drawRectangle(144, 45, 153, 54);
+    do Screen.drawRectangle(144, 54, 153, 63);
+    do Screen.drawRectangle(153, 18, 162, 27);  // Top horizontal bar
+    do Screen.drawRectangle(162, 18, 171, 27);
+    do Screen.drawRectangle(153, 36, 162, 45);  // Middle horizontal bar
+    do Screen.drawRectangle(162, 36, 171, 45);
+
+    // P (repeated)
+    do Screen.drawRectangle(180, 18, 189, 27);  // Vertical line
+    do Screen.drawRectangle(180, 27, 189, 36);
+    do Screen.drawRectangle(180, 36, 189, 45);
+    do Screen.drawRectangle(180, 45, 189, 54);
+    do Screen.drawRectangle(180, 54, 189, 63);
+    do Screen.drawRectangle(189, 18, 198, 27);  // Top horizontal bar
+    do Screen.drawRectangle(198, 18, 207, 27);
+    do Screen.drawRectangle(189, 36, 198, 45);  // Middle horizontal bar
+    do Screen.drawRectangle(198, 36, 207, 45);
+
+    // Y
+    do Screen.drawRectangle(216, 18, 225, 27);  // Left diagonal
+    do Screen.drawRectangle(225, 27, 234, 36);
+    do Screen.drawRectangle(234, 36, 243, 45);
+    do Screen.drawRectangle(243, 45, 252, 54);  // Vertical stem
+    do Screen.drawRectangle(243, 54, 252, 63);
+    do Screen.drawRectangle(252, 18, 261, 27);  // Right diagonal
+    do Screen.drawRectangle(243, 27, 252, 36);
+    do Screen.drawRectangle(234, 36, 243, 45);
+
+    // Space
+    // No drawing needed
+
+    // B
+    do Screen.drawRectangle(270, 18, 279, 27);  // Vertical line
+    do Screen.drawRectangle(270, 27, 279, 36);
+    do Screen.drawRectangle(270, 36, 279, 45);
+    do Screen.drawRectangle(270, 45, 279, 54);
+    do Screen.drawRectangle(270, 54, 279, 63);
+    do Screen.drawRectangle(279, 18, 288, 27);  // Top horizontal bar
+    do Screen.drawRectangle(288, 18, 297, 27);
+    do Screen.drawRectangle(279, 36, 288, 45);  // Middle horizontal bar
+    do Screen.drawRectangle(288, 36, 297, 45);
+    do Screen.drawRectangle(279, 54, 288, 63);  // Bottom horizontal bar
+    do Screen.drawRectangle(288, 54, 297, 63);
+
+    // I
+    do Screen.drawRectangle(306, 18, 315, 27);  // Top horizontal bar
+    do Screen.drawRectangle(315, 18, 324, 27);
+    do Screen.drawRectangle(315, 27, 324, 36);  // Vertical line
+    do Screen.drawRectangle(315, 36, 324, 45);
+    do Screen.drawRectangle(315, 45, 324, 54);
+    do Screen.drawRectangle(315, 54, 324, 63);
+    do Screen.drawRectangle(306, 63, 315, 72);  // Bottom horizontal bar
+    do Screen.drawRectangle(315, 63, 324, 72);
+
+    // R
+    do Screen.drawRectangle(333, 18, 342, 27);  // Vertical line
+    do Screen.drawRectangle(333, 27, 342, 36);
+    do Screen.drawRectangle(333, 36, 342, 45);
+    do Screen.drawRectangle(333, 45, 342, 54);
+    do Screen.drawRectangle(333, 54, 342, 63);
+    do Screen.drawRectangle(342, 18, 351, 27);  // Top horizontal bar
+    do Screen.drawRectangle(351, 18, 360, 27);
+    do Screen.drawRectangle(342, 36, 351, 45);  // Middle horizontal bar
+    do Screen.drawRectangle(351, 36, 360, 45);
+    do Screen.drawRectangle(351, 45, 360, 54);  // Diagonal
+    do Screen.drawRectangle(360, 54, 369, 63);
+
+    // D
+    do Screen.drawRectangle(378, 18, 387, 27);  // Vertical line
+    do Screen.drawRectangle(378, 27, 387, 36);
+    do Screen.drawRectangle(378, 36, 387, 45);
+    do Screen.drawRectangle(378, 45, 387, 54);
+    do Screen.drawRectangle(378, 54, 387, 63);
+    do Screen.drawRectangle(387, 18, 396, 27);  // Top horizontal bar
+    do Screen.drawRectangle(396, 18, 405, 27);
+    do Screen.drawRectangle(387, 63, 396, 72);  // Bottom horizontal bar
+    do Screen.drawRectangle(396, 63, 405, 72);
+
+    // Print text below title
+    do Output.moveCursor(15, 28); // row, column
+    do Output.printString("TEAM 3");
+    do Output.moveCursor(18, 20); // row, column
+    do Output.printString("PRESS ENTER KEY TO START");
+
+    return;
+  }
+
+  method void dispose() {
+    do Memory.deAlloc(this);
+    return;
+  }
+}

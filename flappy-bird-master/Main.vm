@@ -1,0 +1,31 @@
+function Main.main 2
+call Splash.show 0
+pop temp 0
+push constant 0
+pop local 1
+label WHILE_EXP0
+push local 1
+push constant 128
+eq
+not
+not
+if-goto WHILE_END0
+call Keyboard.keyPressed 0
+pop local 1
+push constant 100
+call Sys.wait 1
+pop temp 0
+goto WHILE_EXP0
+label WHILE_END0
+call Screen.clearScreen 0
+pop temp 0
+call FlappyBirdGame.new 0
+pop local 0
+push local 0
+call FlappyBirdGame.run 1
+pop temp 0
+push local 0
+call FlappyBirdGame.dispose 1
+pop temp 0
+push constant 0
+return
