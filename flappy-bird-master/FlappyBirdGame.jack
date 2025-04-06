@@ -41,13 +41,13 @@ class FlappyBirdGame
   method void displayInstructions()
   {
     do Output.moveCursor(0, 0);
-    do Output.printString("Welcome to 16-bit Flappy Bird.");
+    do Output.printString("To Jump, press the space bar.");
     do Output.println();
-    do Output.printString("To jump, press the space bar.");
-    do Output.println();
-    do Output.printString("To quit, press the 'q' key.");
+    do Output.printString("To Quit, press the 'q' key.");
     do Output.println();
     do Output.printString("To win, stay alive.");
+    do Output.println();
+    do Output.printString("Remember to have fun!");
     do Output.println();
     do Output.printString("High Score: ");
     do Output.printInt(highscore);

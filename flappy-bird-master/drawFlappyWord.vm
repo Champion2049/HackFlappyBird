@@ -1,0 +1,2097 @@
+function drawFlappyWord.drawFlappyWord 0
+push argument 0
+push argument 1
+call drawFlappyWord.draw11 2
+pop temp 0
+push argument 0
+push argument 1
+push constant 16
+add
+call drawFlappyWord.draw12 2
+pop temp 0
+push constant 50
+call Sys.wait 1
+pop temp 0
+push argument 0
+push constant 16
+add
+push argument 1
+call drawFlappyWord.draw21 2
+pop temp 0
+push argument 0
+push constant 16
+add
+push argument 1
+push constant 16
+add
+call drawFlappyWord.draw22 2
+pop temp 0
+push constant 100
+call Sys.wait 1
+pop temp 0
+push argument 0
+push constant 32
+add
+push argument 1
+call drawFlappyWord.draw31 2
+pop temp 0
+push argument 0
+push constant 32
+add
+push argument 1
+push constant 16
+add
+call drawFlappyWord.draw32 2
+pop temp 0
+push constant 100
+call Sys.wait 1
+pop temp 0
+push argument 0
+push constant 48
+add
+push argument 1
+call drawFlappyWord.draw41 2
+pop temp 0
+push argument 0
+push constant 48
+add
+push argument 1
+push constant 16
+add
+call drawFlappyWord.draw42 2
+pop temp 0
+push constant 100
+call Sys.wait 1
+pop temp 0
+push argument 0
+push constant 64
+add
+push argument 1
+call drawFlappyWord.draw51 2
+pop temp 0
+push argument 0
+push constant 64
+add
+push argument 1
+push constant 16
+add
+call drawFlappyWord.draw52 2
+pop temp 0
+push constant 100
+call Sys.wait 1
+pop temp 0
+push argument 0
+push constant 80
+add
+push argument 1
+call drawFlappyWord.draw61 2
+pop temp 0
+push argument 0
+push constant 80
+add
+push argument 1
+push constant 16
+add
+call drawFlappyWord.draw62 2
+pop temp 0
+push constant 100
+call Sys.wait 1
+pop temp 0
+push argument 0
+push constant 96
+add
+push argument 1
+call drawFlappyWord.draw71 2
+pop temp 0
+push argument 0
+push constant 96
+add
+push argument 1
+push constant 16
+add
+call drawFlappyWord.draw72 2
+pop temp 0
+push constant 100
+call Sys.wait 1
+pop temp 0
+push argument 0
+push constant 112
+add
+push argument 1
+call drawFlappyWord.draw81 2
+pop temp 0
+push argument 0
+push constant 112
+add
+push argument 1
+push constant 16
+add
+call drawFlappyWord.draw82 2
+pop temp 0
+push constant 0
+return
+function drawFlappyWord.draw11 2
+push argument 0
+push constant 16
+call Math.divide 2
+push argument 1
+push constant 32
+call Math.multiply 2
+add
+pop local 0
+push constant 16384
+push local 0
+add
+pop local 1
+push local 1
+push constant 0
+add
+push constant 1
+neg
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 32
+add
+push constant 1
+neg
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 64
+add
+push constant 16375
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 96
+add
+push constant 903
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 128
+add
+push constant 7
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 160
+add
+push constant 8189
+neg
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 192
+add
+push constant 1009
+neg
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 224
+add
+push constant 497
+neg
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 256
+add
+push constant 225
+neg
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 288
+add
+push constant 225
+neg
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 320
+add
+push constant 225
+neg
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 352
+add
+push constant 225
+neg
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 384
+add
+push constant 241
+neg
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 416
+add
+push constant 241
+neg
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 448
+add
+push constant 241
+neg
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 480
+add
+push constant 1009
+neg
+call Memory.poke 2
+pop temp 0
+push constant 0
+return
+function drawFlappyWord.draw12 2
+push argument 0
+push constant 16
+call Math.divide 2
+push argument 1
+push constant 32
+call Math.multiply 2
+add
+pop local 0
+push constant 16384
+push local 0
+add
+pop local 1
+push local 1
+push constant 0
+add
+push constant 7
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 32
+add
+push constant 7
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 64
+add
+push constant 16135
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 96
+add
+push constant 32519
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 128
+add
+push constant 249
+neg
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 160
+add
+push constant 241
+neg
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 192
+add
+push constant 481
+neg
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 224
+add
+push constant 481
+neg
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 256
+add
+push constant 993
+neg
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 288
+add
+push constant 961
+neg
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 320
+add
+push constant 2041
+neg
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 352
+add
+push constant 249
+neg
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 384
+add
+push constant 1
+neg
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 416
+add
+push constant 1
+neg
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 448
+add
+push constant 1
+neg
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 480
+add
+push constant 1
+neg
+call Memory.poke 2
+pop temp 0
+push constant 0
+return
+function drawFlappyWord.draw21 2
+push argument 0
+push constant 16
+call Math.divide 2
+push argument 1
+push constant 32
+call Math.multiply 2
+add
+pop local 0
+push constant 16384
+push local 0
+add
+pop local 1
+push local 1
+push constant 0
+add
+push constant 1
+neg
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 32
+add
+push constant 32753
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 64
+add
+push constant 8160
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 96
+add
+push constant 992
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 128
+add
+push constant 4032
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 160
+add
+push constant 4039
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 192
+add
+push constant 4047
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 224
+add
+push constant 8159
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 256
+add
+push constant 8159
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 288
+add
+push constant 8143
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 320
+add
+push constant 16321
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 352
+add
+push constant 16320
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 384
+add
+push constant 16352
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 416
+add
+push constant 16369
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 448
+add
+push constant 16383
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 480
+add
+push constant 16383
+call Memory.poke 2
+pop temp 0
+push constant 0
+return
+function drawFlappyWord.draw22 2
+push argument 0
+push constant 16
+call Math.divide 2
+push argument 1
+push constant 32
+call Math.multiply 2
+add
+pop local 0
+push constant 16384
+push local 0
+add
+pop local 1
+push local 1
+push constant 0
+add
+push constant 16382
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 32
+add
+push constant 16382
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 64
+add
+push constant 16382
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 96
+add
+push constant 16382
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 128
+add
+push constant 16382
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 160
+add
+push constant 16383
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 192
+add
+push constant 8191
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 224
+add
+push constant 8191
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 256
+add
+push constant 2047
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 288
+add
+push constant 1023
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 320
+add
+push constant 15873
+neg
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 352
+add
+push constant 1
+neg
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 384
+add
+push constant 1
+neg
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 416
+add
+push constant 1
+neg
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 448
+add
+push constant 1
+neg
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 480
+add
+push constant 1
+neg
+call Memory.poke 2
+pop temp 0
+push constant 0
+return
+function drawFlappyWord.draw31 2
+push argument 0
+push constant 16
+call Math.divide 2
+push argument 1
+push constant 32
+call Math.multiply 2
+add
+pop local 0
+push constant 16384
+push local 0
+add
+pop local 1
+push argument 0
+push constant 16
+call Math.divide 2
+push argument 1
+push constant 32
+call Math.multiply 2
+add
+pop local 0
+push constant 16384
+push local 0
+add
+pop local 1
+push local 1
+push constant 0
+add
+push constant 1
+neg
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 32
+add
+push constant 1
+neg
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 64
+add
+push constant 1
+neg
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 96
+add
+push constant 2
+neg
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 128
+add
+push constant 1
+neg
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 160
+add
+push constant 4
+neg
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 192
+add
+push constant 4
+neg
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 224
+add
+push constant 4
+neg
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 256
+add
+push constant 8
+neg
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 288
+add
+push constant 8
+neg
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 320
+add
+push constant 8
+neg
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 352
+add
+push constant 16
+neg
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 384
+add
+push constant 16368
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 416
+add
+push constant 4080
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 448
+add
+push constant 2032
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 480
+add
+push constant 1008
+call Memory.poke 2
+pop temp 0
+push constant 0
+return
+function drawFlappyWord.draw32 2
+push argument 0
+push constant 16
+call Math.divide 2
+push argument 1
+push constant 32
+call Math.multiply 2
+add
+pop local 0
+push constant 16384
+push local 0
+add
+pop local 1
+push local 1
+push constant 0
+add
+push constant 7696
+neg
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 32
+add
+push constant 1544
+neg
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 64
+add
+push constant 1796
+neg
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 96
+add
+push constant 772
+neg
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 128
+add
+push constant 900
+neg
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 160
+add
+push constant 386
+neg
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 192
+add
+push constant 388
+neg
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 224
+add
+push constant 6384
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 256
+add
+push constant 32544
+neg
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 288
+add
+push constant 7966
+neg
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 320
+add
+push constant 1
+neg
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 352
+add
+push constant 1
+neg
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 384
+add
+push constant 1
+neg
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 416
+add
+push constant 1
+neg
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 448
+add
+push constant 1
+neg
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 480
+add
+push constant 1
+neg
+call Memory.poke 2
+pop temp 0
+push constant 0
+return
+function drawFlappyWord.draw41 2
+push argument 0
+push constant 16
+call Math.divide 2
+push argument 1
+push constant 32
+call Math.multiply 2
+add
+pop local 0
+push constant 16384
+push local 0
+add
+pop local 1
+push local 1
+push constant 0
+add
+push constant 1
+neg
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 32
+add
+push constant 1
+neg
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 64
+add
+push constant 1
+neg
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 96
+add
+push constant 1
+neg
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 128
+add
+push constant 1
+neg
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 160
+add
+push constant 1
+neg
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 192
+add
+push constant 1
+neg
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 224
+add
+push constant 1537
+neg
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 256
+add
+push constant 1793
+neg
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 288
+add
+push constant 31751
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 320
+add
+push constant 3849
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 352
+add
+push constant 3849
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 384
+add
+push constant 3842
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 416
+add
+push constant 128
+neg
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 448
+add
+push constant 32640
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 480
+add
+push constant 32256
+call Memory.poke 2
+pop temp 0
+push constant 0
+return
+function drawFlappyWord.draw42 2
+push argument 0
+push constant 16
+call Math.divide 2
+push argument 1
+push constant 32
+call Math.multiply 2
+add
+pop local 0
+push constant 16384
+push local 0
+add
+pop local 1
+push local 1
+push constant 0
+add
+push constant 32263
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 32
+add
+push constant 32263
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 64
+add
+push constant 32259
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 96
+add
+push constant 509
+neg
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 128
+add
+push constant 511
+neg
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 160
+add
+push constant 2304
+neg
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 192
+add
+push constant 8182
+neg
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 224
+add
+push constant 16369
+neg
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 256
+add
+push constant 241
+neg
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 288
+add
+push constant 113
+neg
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 320
+add
+push constant 57
+neg
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 352
+add
+push constant 1
+neg
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 384
+add
+push constant 8191
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 416
+add
+push constant 8193
+neg
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 448
+add
+push constant 1
+neg
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 480
+add
+push constant 1
+neg
+call Memory.poke 2
+pop temp 0
+push constant 0
+return
+function drawFlappyWord.draw51 2
+push argument 0
+push constant 16
+call Math.divide 2
+push argument 1
+push constant 32
+call Math.multiply 2
+add
+pop local 0
+push constant 16384
+push local 0
+add
+pop local 1
+push local 1
+push constant 0
+add
+push constant 1
+neg
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 32
+add
+push constant 1
+neg
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 64
+add
+push constant 1
+neg
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 96
+add
+push constant 1
+neg
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 128
+add
+push constant 1
+neg
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 160
+add
+push constant 1
+neg
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 192
+add
+push constant 1
+neg
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 224
+add
+push constant 1
+neg
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 256
+add
+push constant 16324
+neg
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 288
+add
+push constant 32756
+neg
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 320
+add
+push constant 32244
+neg
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 352
+add
+push constant 1920
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 384
+add
+push constant 2016
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 416
+add
+push constant 2040
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 448
+add
+push constant 2044
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 480
+add
+push constant 2044
+call Memory.poke 2
+pop temp 0
+push constant 0
+return
+function drawFlappyWord.draw52 2
+push argument 0
+push constant 16
+call Math.divide 2
+push argument 1
+push constant 32
+call Math.multiply 2
+add
+pop local 0
+push constant 16384
+push local 0
+add
+pop local 1
+push local 1
+push constant 0
+add
+push constant 30724
+neg
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 32
+add
+push constant 32708
+neg
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 64
+add
+push constant 8192
+neg
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 96
+add
+push constant 8192
+neg
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 128
+add
+push constant 3872
+neg
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 160
+add
+push constant 15
+neg
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 192
+add
+push constant 15
+neg
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 224
+add
+push constant 15
+neg
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 256
+add
+push constant 63
+neg
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 288
+add
+push constant 63
+neg
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 320
+add
+push constant 64
+neg
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 352
+add
+push constant 64
+neg
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 384
+add
+push constant 128
+neg
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 416
+add
+push constant 32767
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 448
+add
+push constant 1
+neg
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 480
+add
+push constant 1
+neg
+call Memory.poke 2
+pop temp 0
+push constant 0
+return
+function drawFlappyWord.draw61 2
+push argument 0
+push constant 16
+call Math.divide 2
+push argument 1
+push constant 32
+call Math.multiply 2
+add
+pop local 0
+push constant 16384
+push local 0
+add
+pop local 1
+push local 1
+push constant 0
+add
+push constant 1
+neg
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 32
+add
+push constant 1
+neg
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 64
+add
+push constant 1
+neg
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 96
+add
+push constant 1
+neg
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 128
+add
+push constant 1
+neg
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 160
+add
+push constant 1
+neg
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 192
+add
+push constant 2047
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 224
+add
+push constant 255
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 256
+add
+push constant 47
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 288
+add
+push constant 7
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 320
+add
+push constant 31747
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 352
+add
+push constant 32259
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 384
+add
+push constant 32259
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 416
+add
+push constant 32521
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 448
+add
+push constant 32527
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 480
+add
+push constant 32271
+call Memory.poke 2
+pop temp 0
+push constant 0
+return
+function drawFlappyWord.draw62 2
+push argument 0
+push constant 16
+call Math.divide 2
+push argument 1
+push constant 32
+call Math.multiply 2
+add
+pop local 0
+push constant 16384
+push local 0
+add
+pop local 1
+push local 1
+push constant 0
+add
+push constant 15887
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 32
+add
+push constant 7695
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 64
+add
+push constant 15
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 96
+add
+push constant 32761
+neg
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 128
+add
+push constant 10297
+neg
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 160
+add
+push constant 57
+neg
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 192
+add
+push constant 57
+neg
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 224
+add
+push constant 61
+neg
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 256
+add
+push constant 125
+neg
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 288
+add
+push constant 61
+neg
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 320
+add
+push constant 61
+neg
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 352
+add
+push constant 61
+neg
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 384
+add
+push constant 61
+neg
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 416
+add
+push constant 31
+neg
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 448
+add
+push constant 32
+neg
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 480
+add
+push constant 1
+neg
+call Memory.poke 2
+pop temp 0
+push constant 0
+return
+function drawFlappyWord.draw71 2
+push argument 0
+push constant 16
+call Math.divide 2
+push argument 1
+push constant 32
+call Math.multiply 2
+add
+pop local 0
+push constant 16384
+push local 0
+add
+pop local 1
+push local 1
+push constant 0
+add
+push constant 1
+neg
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 32
+add
+push constant 1
+neg
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 64
+add
+push constant 1
+neg
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 96
+add
+push constant 1
+neg
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 128
+add
+push constant 1
+neg
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 160
+add
+push constant 1
+neg
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 192
+add
+push constant 16382
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 224
+add
+push constant 252
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 256
+add
+push constant 24
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 288
+add
+push constant 8176
+neg
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 320
+add
+push constant 7184
+neg
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 352
+add
+push constant 7184
+neg
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 384
+add
+push constant 15376
+neg
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 416
+add
+push constant 31760
+neg
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 448
+add
+push constant 8176
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 480
+add
+push constant 16368
+call Memory.poke 2
+pop temp 0
+push constant 0
+return
+function drawFlappyWord.draw72 2
+push argument 0
+push constant 16
+call Math.divide 2
+push argument 1
+push constant 32
+call Math.multiply 2
+add
+pop local 0
+push constant 16384
+push local 0
+add
+pop local 1
+push local 1
+push constant 0
+add
+push constant 32752
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 32
+add
+push constant 4
+neg
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 64
+add
+push constant 8
+neg
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 96
+add
+push constant 2
+neg
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 128
+add
+push constant 7681
+neg
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 160
+add
+push constant 32641
+neg
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 192
+add
+push constant 31
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 224
+add
+push constant 31
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 256
+add
+push constant 14367
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 288
+add
+push constant 2017
+neg
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 320
+add
+push constant 4033
+neg
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 352
+add
+push constant 8129
+neg
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 384
+add
+push constant 16321
+neg
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 416
+add
+push constant 1023
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 448
+add
+push constant 2047
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 480
+add
+push constant 1
+neg
+call Memory.poke 2
+pop temp 0
+push constant 0
+return
+function drawFlappyWord.draw81 2
+push argument 0
+push constant 16
+call Math.divide 2
+push argument 1
+push constant 32
+call Math.multiply 2
+add
+pop local 0
+push constant 16384
+push local 0
+add
+pop local 1
+push local 1
+push constant 0
+add
+push constant 1
+neg
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 32
+add
+push constant 1
+neg
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 64
+add
+push constant 1
+neg
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 96
+add
+push constant 1
+neg
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 128
+add
+push constant 1
+neg
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 160
+add
+push constant 1
+neg
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 192
+add
+push constant 1
+neg
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 224
+add
+push constant 3969
+neg
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 256
+add
+push constant 32641
+neg
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 288
+add
+push constant 127
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 320
+add
+push constant 1023
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 352
+add
+push constant 15361
+neg
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 384
+add
+push constant 15361
+neg
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 416
+add
+push constant 15361
+neg
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 448
+add
+push constant 3586
+neg
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 480
+add
+push constant 3844
+neg
+call Memory.poke 2
+pop temp 0
+push constant 0
+return
+function drawFlappyWord.draw82 2
+push argument 0
+push constant 16
+call Math.divide 2
+push argument 1
+push constant 32
+call Math.multiply 2
+add
+pop local 0
+push constant 16384
+push local 0
+add
+pop local 1
+push local 1
+push constant 0
+add
+push constant 3872
+neg
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 32
+add
+push constant 4093
+neg
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 64
+add
+push constant 2045
+neg
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 96
+add
+push constant 2041
+neg
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 128
+add
+push constant 2041
+neg
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 160
+add
+push constant 2017
+neg
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 192
+add
+push constant 1921
+neg
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 224
+add
+push constant 1794
+neg
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 256
+add
+push constant 3842
+neg
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 288
+add
+push constant 3841
+neg
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 320
+add
+push constant 7937
+neg
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 352
+add
+push constant 7937
+neg
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 384
+add
+push constant 8065
+neg
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 416
+add
+push constant 4096
+neg
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 448
+add
+push constant 2048
+neg
+call Memory.poke 2
+pop temp 0
+push local 1
+push constant 480
+add
+push constant 511
+neg
+call Memory.poke 2
+pop temp 0
+push constant 0
+return
