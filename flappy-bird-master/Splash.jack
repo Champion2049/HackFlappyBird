@@ -12,7 +12,7 @@ class Splash {
 
 function void writeIntro(){
     var String welcome, introA, introB, introC, begin;
-    let welcome = " Welcome to 16 bit Flappy bird!";
+    let welcome = "Welcome to 16 bit Flappy bird!";
     let introA = "*Press 'Space' or to flap the wings of the bird.";
     let introB = "*Keep it from crashing, and try to score 120+ to check";
     let introC = "Look out for the POWERUPS!";
