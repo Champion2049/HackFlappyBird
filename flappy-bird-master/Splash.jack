@@ -14,7 +14,7 @@ function void writeIntro(){
     var String welcome, introA, introB, introC, introD, begin;
     let welcome = "Welcome to 16 bit Flappy bird!";
     let introA = "*Press 'Space' to flap the wings of the bird.";
-    let introB = "*Keep it from crashing, and try to score 120+ to check";
+    let introB = "*Progress through the levels as they get harder!";
     let introC = "Look out for the POWERUPS and OBSTACLES!";
     let introD = "Presented to you by TEAM 2";
     let begin = "Press ENTER to BEGIN!";
