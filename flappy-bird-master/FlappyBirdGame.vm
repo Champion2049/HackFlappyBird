@@ -1,5 +1,5 @@
 function FlappyBirdGame.new 0
-push constant 12
+push constant 15
 call Memory.alloc 1
 pop pointer 0
 push constant 150
@@ -21,6 +21,10 @@ push constant 0
 pop this 10
 push constant 0
 pop this 11
+push constant 15
+pop this 13
+push constant 120
+pop this 14
 push pointer 0
 return
 function FlappyBirdGame.displayInstructions 0
@@ -325,6 +329,16 @@ call FlappyBirdGame.updateBirdWingState 1
 pop temp 0
 label IF_END0
 push pointer 0
+call FlappyBirdGame.calculateScore 1
+pop local 2
+push constant 2
+call Sys.wait 1
+pop temp 0
+push pointer 0
+push local 2
+call FlappyBirdGame.updateLevel 2
+pop temp 0
+push pointer 0
 call FlappyBirdGame.findCollision 1
 if-goto IF_TRUE1
 goto IF_FALSE1
@@ -347,6 +361,10 @@ pop temp 0
 push constant 3000
 call Sys.wait 1
 pop temp 0
+push constant 15
+pop this 13
+push constant 120
+pop this 14
 push pointer 0
 call FlappyBirdGame.initializeGameState 1
 pop temp 0
@@ -392,6 +410,58 @@ call FlappyBirdGame.updateBirdWingState 1
 pop temp 0
 goto WHILE_EXP0
 label WHILE_END0
+push constant 0
+return
+function FlappyBirdGame.updateLevel 0
+push argument 0
+pop pointer 0
+push argument 1
+push constant 50
+gt
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push constant 3
+pop this 12
+push constant 40
+pop this 13
+push constant 75
+pop this 14
+label IF_FALSE0
+push argument 1
+push constant 25
+gt
+if-goto IF_TRUE1
+goto IF_FALSE1
+label IF_TRUE1
+push constant 2
+pop this 12
+push constant 35
+pop this 13
+push constant 90
+pop this 14
+label IF_FALSE1
+push argument 1
+push constant 10
+gt
+if-goto IF_TRUE2
+goto IF_FALSE2
+label IF_TRUE2
+push constant 1
+pop this 12
+push constant 25
+pop this 13
+push constant 100
+pop this 14
+goto IF_END2
+label IF_FALSE2
+push constant 0
+pop this 12
+push constant 15
+pop this 13
+push constant 120
+pop this 14
+label IF_END2
 push constant 0
 return
 function FlappyBirdGame.initializeGameState 2
@@ -639,7 +709,9 @@ push this 6
 push this 5
 add
 push this 9
-call Pipe.new 1
+push this 13
+push this 14
+call Pipe.new 3
 pop temp 0
 pop pointer 1
 push temp 0

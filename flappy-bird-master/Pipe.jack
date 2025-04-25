@@ -16,22 +16,19 @@ class Pipe
   /*
   Construct new Pipe object.
   */
-  constructor Pipe new(int gap_offset) {
-    let width = 12;
+  constructor Pipe new(int gap_offset, int pipe_width, int pipe_gap) {
+    let width = pipe_width;
     let width_increment = 1;
     let width_current = width_increment;
     let x_offset = 509;
     let screen_width = 512;
     let screen_height = 256;
-    
-    // Increased gap size for easier gameplay
-    let gap_size = 90;
-
+    let gap_size = pipe_gap; // now dynamic
     let gap_top = calculateGapTop(gap_offset);
     let gap_bottom = gap_top + gap_size;
 
     return this;
-  }
+}
 
   /*
   Calculate coordinate for bottom of top pipe.

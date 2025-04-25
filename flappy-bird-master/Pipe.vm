@@ -2,7 +2,7 @@ function Pipe.new 0
 push constant 9
 call Memory.alloc 1
 pop pointer 0
-push constant 12
+push argument 1
 pop this 0
 push constant 1
 pop this 2
@@ -14,7 +14,7 @@ push constant 512
 pop this 7
 push constant 256
 pop this 8
-push constant 90
+push argument 2
 pop this 4
 push pointer 0
 push argument 0

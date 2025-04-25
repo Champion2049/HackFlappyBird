@@ -16,7 +16,11 @@ class FlappyBirdGame
   field int dist_after_last_pipe;         // Amount of space following last created pipe.
   field int jumps;                        // Number of jumps made in game.
   field int total_pipes;                  // Number of pipes created.
-  field int highscore;
+  field int highscore;                    // Highest score achieved in game.
+  field int level;                        // Level of game.
+  field int pipe_width;                   // Width of pipe. 
+  field int pipe_gap;                     // Gap between top and bottom pipe.
+
 
   /*
   Flappy Bird Game constructor.
@@ -31,7 +35,8 @@ class FlappyBirdGame
     let jumps = 1;
     let total_pipes = 0;
     let highscore = 0;
-
+    let pipe_width = 15;     // Default values for level 0
+    let pipe_gap = 120;      // Default values for level 0
     return this;
   }
 
@@ -76,6 +81,10 @@ class FlappyBirdGame
           do updateBirdFallState();
           do updateBirdWingState();
         }
+
+        let score = calculateScore();     // Update score every frame
+        do Sys.wait(2);             // Wait 2ms between frames
+        do updateLevel(score);             // Update level based on current score
  
         // If collision found, go to score and reset state.
         if (findCollision()) {
@@ -85,6 +94,8 @@ class FlappyBirdGame
           }
           do displayScore();
           do Sys.wait(3000);
+          let pipe_width = 15;     // Default values for level 0
+          let pipe_gap = 120;      // Default values for level 0
           do initializeGameState();
           do waitForGameToStart();
         }
@@ -118,6 +129,36 @@ class FlappyBirdGame
 
     return;
   }
+
+  /**
+  * Update game level based on score.
+  */
+  method void updateLevel(int score)
+  {
+    if (score > 50) {
+      let level = 3;
+      let pipe_width = 40;
+      let pipe_gap = 75;
+    }
+    if (score > 25) {
+      let level = 2;
+      let pipe_width = 35;
+      let pipe_gap = 90;
+    }
+    if (score > 10) {
+      let level = 1;
+      let pipe_width = 25;
+      let pipe_gap = 100;
+    }
+    else {
+      let level = 0;
+      let pipe_width = 15;
+      let pipe_gap = 120;
+    }
+
+    return;
+  }
+
 
   /*
   Set all fields to pre-game state.
@@ -279,7 +320,7 @@ class FlappyBirdGame
     var Pipe pipe;
 
     if (dist_after_last_pipe = dist_between_pipes) {
-      let pipes[count_pipes] = Pipe.new(jumps);
+      let pipes[count_pipes] = Pipe.new(jumps, pipe_width, pipe_gap);
       let count_pipes = count_pipes + 1;
       let total_pipes = total_pipes + 1;
       let dist_after_last_pipe = 0;
