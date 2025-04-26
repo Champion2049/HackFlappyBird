@@ -171,6 +171,11 @@ class FlappyBirdGame {
     /* Update game level based on score. */
     method void updateLevel(int score) {
         // Note: Order matters here, check highest score first
+        if(score > 100) {
+            let level = 4;
+            let pipe_width = 50;
+            let pipe_gap = 70;
+        } else{
         if (score > 50) {
             let level = 3;
             let pipe_width = 40;
@@ -191,6 +196,7 @@ class FlappyBirdGame {
                     let pipe_gap = 120; // Default level 0
                 }
             }
+            }
         }
         return;
     }
@@ -198,9 +204,6 @@ class FlappyBirdGame {
     /* Set all fields to pre-game state. */
     method void initializeGameState() {
         var int i;
-
-        do Screen.clearScreen();  
-        do displayInstructions();
 
         // Dispose old bird if exists, then create new one
         if (~(bird = null)) {
@@ -233,6 +236,8 @@ class FlappyBirdGame {
         let dist_after_last_pipe = dist_between_pipes; // Ready to create first pipe
         let lastPipeMiddleY = 112; // Reset last pipe Y position
         let jumps = 0; // Start jumps at 0 for the new game
+        do Screen.clearScreen(); 
+        do displayInstructions();
 
         return;
     }

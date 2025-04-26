@@ -476,53 +476,68 @@ function FlappyBirdGame.updateLevel 0
 push argument 0
 pop pointer 0
 push argument 1
-push constant 50
+push constant 100
 gt
 if-goto IF_TRUE0
 goto IF_FALSE0
 label IF_TRUE0
+push constant 4
+pop this 17
+push constant 50
+pop this 12
+push constant 70
+pop this 13
+goto IF_END0
+label IF_FALSE0
+push argument 1
+push constant 50
+gt
+if-goto IF_TRUE1
+goto IF_FALSE1
+label IF_TRUE1
 push constant 3
 pop this 17
 push constant 40
 pop this 12
 push constant 75
 pop this 13
-goto IF_END0
-label IF_FALSE0
+goto IF_END1
+label IF_FALSE1
 push argument 1
 push constant 25
 gt
-if-goto IF_TRUE1
-goto IF_FALSE1
-label IF_TRUE1
+if-goto IF_TRUE2
+goto IF_FALSE2
+label IF_TRUE2
 push constant 2
 pop this 17
 push constant 35
 pop this 12
 push constant 90
 pop this 13
-goto IF_END1
-label IF_FALSE1
+goto IF_END2
+label IF_FALSE2
 push argument 1
 push constant 10
 gt
-if-goto IF_TRUE2
-goto IF_FALSE2
-label IF_TRUE2
+if-goto IF_TRUE3
+goto IF_FALSE3
+label IF_TRUE3
 push constant 1
 pop this 17
 push constant 25
 pop this 12
 push constant 100
 pop this 13
-goto IF_END2
-label IF_FALSE2
+goto IF_END3
+label IF_FALSE3
 push constant 0
 pop this 17
 push constant 15
 pop this 12
 push constant 120
 pop this 13
+label IF_END3
 label IF_END2
 label IF_END1
 label IF_END0
@@ -531,11 +546,6 @@ return
 function FlappyBirdGame.initializeGameState 1
 push argument 0
 pop pointer 0
-call Screen.clearScreen 0
-pop temp 0
-push pointer 0
-call FlappyBirdGame.displayInstructions 1
-pop temp 0
 push this 0
 push constant 0
 eq
@@ -611,6 +621,11 @@ push constant 112
 pop this 14
 push constant 0
 pop this 15
+call Screen.clearScreen 0
+pop temp 0
+push pointer 0
+call FlappyBirdGame.displayInstructions 1
+pop temp 0
 push constant 0
 return
 function FlappyBirdGame.displayScore 1
@@ -1017,9 +1032,6 @@ goto IF_FALSE1
 label IF_TRUE1
 push this 2
 call Treat.treatGot 1
-pop temp 0
-push this 2
-call Treat.writeExplain 1
 pop temp 0
 label IF_FALSE1
 label IF_FALSE0
