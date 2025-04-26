@@ -20,6 +20,7 @@ class FlappyBirdGame
   field int level;                        // Level of game.
   field int pipe_width;                   // Width of pipe. 
   field int pipe_gap;                     // Gap between top and bottom pipe.
+  field Treat treat;                      // Treat object for power-ups.
 
 
   /*
@@ -37,6 +38,7 @@ class FlappyBirdGame
     let highscore = 0;
     let pipe_width = 15;     // Default values for level 0
     let pipe_gap = 120;      // Default values for level 0
+    let treat = Treat.new(); // Initialize the treat object
     return this;
   }
 
@@ -56,7 +58,6 @@ class FlappyBirdGame
     do Output.println();
     do Output.printString("High Score: ");
     do Output.printInt(highscore);
-
     return;
   }
 
@@ -173,6 +174,12 @@ class FlappyBirdGame
     do displayInstructions();
 
     let bird = FlappyBird.new(bird_height_default);
+    
+    // Reset treat state
+    if (~(treat = null)) {
+        do treat.dispose();
+    }
+    let treat = Treat.new();
 
     // Remove existing pipes.
     while (i < count_pipes) {
@@ -220,8 +227,16 @@ class FlappyBirdGame
   */
   method void updateBirdFallState()
   {
-    // Only move bird after every five 'draw' cycles to prevent dropping too fast.
-    if (bird_fall_count = 5) {
+    // Only move bird after a certain number of 'draw' cycles to prevent dropping too fast.
+    // If treat 2 is active (slow down), bird falls more slowly
+    var int fall_speed;
+    
+    let fall_speed = 5;
+    if (treat.treatOn() = 2) {
+        let fall_speed = 10; // Slower falling when slow down treat is active
+    }
+    
+    if (bird_fall_count = fall_speed) {
       do bird.moveDown();
       let bird_fall_count = 1;
     } else {
@@ -260,9 +275,55 @@ class FlappyBirdGame
     do disposeUnseenPipe();
     // Create new pipe object if existing last pipe has moved far enough.
     do createNewPipe();
+    
+    // Handle treat logic
+    do spawnTreatIfNeeded();
+    do treat.treatAdvance();
+    do checkTreatCollision();
+    do treat.timerTick();
 
     do bird.draw();
 
+    return;
+  }
+
+  /* 
+  Check if we should spawn a treat (if none is currently active)
+  */
+  method void spawnTreatIfNeeded() {
+    var int randomNumber;
+    
+    // Only spawn a treat if none is coming
+    if (treat.treatComing() = 0) {
+        // Get a random number between 1-100
+        let randomNumber = MyMath.mod(jumps, 100) + 1;
+        
+        // 10% chance to spawn a treat
+        if (randomNumber < 10) {
+            // Generate a random treat type (1-4)
+            let randomNumber = MyMath.mod(jumps * total_pipes, 4) + 1;
+            do treat.startComing(randomNumber);
+            // Display what treat is coming
+            do treat.writeExplain();
+        }
+    }
+    
+    return;
+  }
+
+  /*
+  Check for collision between bird and treat
+  */
+  method void checkTreatCollision() {
+    // Only check collision if a treat is coming and is near the bird
+    if ((treat.treatComing() > 0) & (treat.treatAtBird() = 1)) {
+        // If bird Y position overlaps with treat Y position
+        if ((bird.getYOffset() < (treat.treatYpos() + 32)) & 
+            ((bird.getYOffset() + bird.getSizeY()) > treat.treatYpos())) {
+            // Treat was collected!
+            do treat.treatGot();
+        }
+    }
     return;
   }
 
@@ -318,9 +379,18 @@ class FlappyBirdGame
   method void createNewPipe()
   {
     var Pipe pipe;
+    var int pipeMiddleY;
 
     if (dist_after_last_pipe = dist_between_pipes) {
       let pipes[count_pipes] = Pipe.new(jumps, pipe_width, pipe_gap);
+      
+      // Calculate the middle Y position of the pipe gap for treat placement
+      let pipe = pipes[count_pipes];
+      let pipeMiddleY = pipe.getGapTop() + (pipe_gap / 2) - 16; // Center treat in gap
+      
+      // Set the treat Y position to the middle of the gap
+      do treat.setTreatYpos(pipeMiddleY);
+      
       let count_pipes = count_pipes + 1;
       let total_pipes = total_pipes + 1;
       let dist_after_last_pipe = 0;
@@ -351,6 +421,11 @@ class FlappyBirdGame
       let i = i + 1;
     }
 
+    // If treat 3 is active (score doubled), double the score
+    if (treat.treatOn() = 3) {
+      let score = score * 2;
+    }
+
     return score;
   }
 
@@ -361,11 +436,29 @@ class FlappyBirdGame
   {
     var Pipe pipe;
     var int i;
+    // If treat 4 is active (helmet protection), bird is protected from collisions
+    if (treat.treatOn() = 4) {
+      return false;
+    }
+    
+    // Has bird hit the top of the screen.
+    if (bird.getYOffset() = 0) {
+      return true;
+    }
 
+    // Has bird hit the bottom of the screen.
+    if ((bird.getYOffset() + bird.getSizeY()) = 255) {
+      return true;
+    }
     let i = 0;
     while (i < count_pipes) {
       let pipe = pipes[i];
       if (collides(pipe)) {
+        // If treat 1 is active (easy map), don't die from collisions
+        if (treat.treatOn() = 1) {
+          do treat.treatDone(); // Use up the treat
+          return false;
+        }
         return true;
       }
       let i = i + 1;
@@ -379,16 +472,6 @@ class FlappyBirdGame
   */
   method boolean collides(Pipe pipe)
   {
-    // Has bird hit the top of the screen.
-    if (bird.getYOffset() = 0) {
-      return true;
-    }
-
-    // Has bird hit the bottom of the screen.
-    if ((bird.getYOffset() + bird.getSizeY()) = 255) {
-      return true;
-    }
-
     // Is bird still in front of pipe.
     if (pipe.getXOffset() > (bird.getXOffset() + bird.getSizeX() + 1)) {
       return false;
@@ -427,6 +510,7 @@ class FlappyBirdGame
 
     do scoreboard.dispose();
     do bird.dispose();
+    do treat.dispose();
 
     do Memory.deAlloc(this);
 
