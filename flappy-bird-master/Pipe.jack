@@ -221,18 +221,18 @@ class Pipe {
 
     /* Dispose of pipe object (erase from screen and deallocate memory). */
     method void dispose() {
-        // Erase the pipe from the screen before deallocating memory.
-        // This is important if the game doesn't whiteout the screen immediately upon game over.
-        // Only attempt to erase if the pipe is still considered visible (width_current > 0)
-        // This prevents the illegal coordinate error during disposal if erase is called after it goes off-screen.
-        // The erase method now contains its own coordinate validation.
-        if (width_current > 0) {
-            do erase(); // Call erase one last time to clear the pipe from the screen
+        // Only erase if the pipe is still visible on screen
+        if (~isOffScreen()) { // If not off-screen
+            // Implement an erase logic that covers the pipe's current drawn area
+            // This might involve drawing white over the pipe's coordinates.
+            do Screen.setColor(false); // White color for erasing
+            // Draw a white rectangle over the pipe's last drawn position
+            // You'll need to calculate the rectangle based on x_offset and width.
+            do Screen.drawRectangle(Math.max(0, x_offset), 0, Math.min(511, x_offset + width), screen_height - 1);
+            do Screen.setColor(true); // Set back to black
         }
 
-        // Deallocate the memory occupied by this Pipe object
         do Memory.deAlloc(this);
-
         return;
     }
 }
