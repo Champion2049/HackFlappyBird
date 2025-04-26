@@ -296,12 +296,12 @@ class FlappyBirdGame
     // Only spawn a treat if none is coming
     if (treat.treatComing() = 0) {
         // Get a random number between 1-100
-        let randomNumber = MyMath.mod(jumps, 100) + 1;
+        let randomNumber = MyMath.mod(jumps + total_pipes + bird.getYOffset(), 100) + 1;
         
-        // 10% chance to spawn a treat
-        if (randomNumber < 10) {
+        // 3% chance to spawn a treat
+        if (randomNumber < 3) {
             // Generate a random treat type (1-4)
-            let randomNumber = MyMath.mod(jumps * total_pipes, 4) + 1;
+            let randomNumber = MyMath.mod(jumps * bird.getYOffset() + total_pipes, 4) + 1;
             do treat.startComing(randomNumber);
             // Display what treat is coming
             do treat.writeExplain();

@@ -138,7 +138,14 @@ class Treat {
     let whiteline = "                                ";
     do Output.moveCursor(11,5);
     do Output.printString(whiteline);
+    do Output.moveCursor(11,6);
+    do Output.printString(whiteline); 
+    do Output.moveCursor(11,10);
+    do Output.printString(whiteline);
+    do Output.moveCursor(11,16);
+    do Output.printString(whiteline);
     
+    do whiteline.dispose();
     return;
   }
 
