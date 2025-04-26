@@ -135,8 +135,10 @@ constructor Treat new() {
     /* Activates the treat effect when the bird collects it. */
     method void treatGot() {
         // Only apply effect if treat is in 'coming' state
-        if (treatComing > 0) { // treatComing will be 2, 3, or 4
+        if (treatComing > 1) { // treatComing will be 2, 3, or 4
             do clearTreatVisual();    // Erase the treat image from the screen using validated method
+            do writeExplain();      // Show the explanation text for the treat effect
+            do Sys.wait(1000); // Wait for 1 second before applying effect
             let treatOn = treatComing; // Set the 'active' treat type (2, 3, or 4)
             let treatComing = 0;     // Treat is no longer 'coming'
             let treatTimer = 0;      // Start the timer for timed effects
@@ -244,45 +246,53 @@ constructor Treat new() {
 
     /* Displays text explaining the incoming treat. */
     method void writeExplain() {
-        var String explanation;
-        let explanation = null; // Initialize to null
+      // Assuming treatComing is already set
+      var String explanation;
+      var int rectX1, rectY1, rectX2, rectY2;
+      var int textRow, textCol;
 
-        // --- Clear previous explanation first ---
-        do clearExplain(); // Assuming clearExplain uses Output safely
+      // --- Your existing logic to set the explanation string ---
+      if (treatComing = 2) { // Bird Slow Down
+          let explanation = "Slow motion activated!";
+      } else {
+          if (treatComing = 3) { // Score Doubled
+              let explanation = "Score Doubled!";
+          } else {
+              if (treatComing = 4) { // Helmet / Protection
+                  let explanation = "You are Invincible!";
+              } else {
+                  let explanation = ""; // Or some default message
+              }
+          }
+      }
+      // --- End of your existing logic ---
 
-        // --- Set explanation string based on treat type ---
-        // Positioning (row, col) might need adjustment
-        // Let's use a column that is less likely to go off-screen.
-        do Output.moveCursor(21, 2); // Position suggestion: Row 21, Column 2
+      // --- Determine rectangle and text position (example coordinates) ---
+      // You will likely need to adjust these based on your screen layout
+      let rectX1 = 50;
+      let rectY1 = 100;
+      let rectX2 = 350; // Make wide enough for the longest message
+      let rectY2 = 120; // Tall enough for one line of text
 
-        // Removed Treat 1 explanation
-        if (treatComing = 2) { // Bird Slow Down
-             let explanation = "Slow motion activated!";
-        } else {
-            if (treatComing = 3) { // Score Doubled
-                 let explanation = "Score Doubled!";
-            } else {
-                if (treatComing = 4) { // Helmet / Protection
-                     let explanation = "You are Invincible!";
-                }
-            }
-        }
+      // Calculate text position within the rectangle (add some padding)
+      // Character width is typically 8 pixels, height 11 pixels in Jack OS
+      let textCol = (rectX1 + 5) / 8; // 5 pixels padding from left
+      let textRow = (rectY1 + 5) / 11; // 5 pixels padding from top
 
-        // --- Print the explanation if one was set ---
-        if (~(explanation = null)) {
-            do Output.printString(explanation);
-            do explanation.dispose(); // Dispose the created string object
-        }
-        return;
+      // --- Draw the white rectangle ---
+      do Screen.setColor(false); // Set color to white
+      do Screen.drawRectangle(rectX1, rectY1, rectX2, rectY2);
+
+      // --- Print the text inside the rectangle ---
+      do Screen.setColor(true); // Set color to black for text (or another visible color)
+      do Output.moveCursor(textRow, textCol); // Move cursor to the text position
+      do Output.printString(explanation);
+      return;
     }
 
     /* Clears the area where explanation text is displayed. */
     method void clearExplain() {
-        // Clear a line at the bottom of the screen (adjust row/columns as needed)
-        // Output class methods are generally safe regarding coordinates.
-        do Output.moveCursor(21, 0); // Move to start of explanation line
-        // Print enough spaces to cover the longest possible explanation
-        // Ensure enough spaces to cover the entire line or the max message length.
+        do Output.moveCursor(21, 0);
         do Output.printString("                                                "); // Increased spaces
         return;
     }

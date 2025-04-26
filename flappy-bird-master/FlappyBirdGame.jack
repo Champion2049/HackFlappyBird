@@ -396,9 +396,6 @@ class FlappyBirdGame {
                 // *** Start the treat, passing the type and the stored pipe gap middle Y position ***
                 // The Treat class will calculate its own Ypos based on this middle Y and its height.
                 do treat.startComing(randomNumber, lastPipeMiddleY);
-
-                // Display explanation text for the incoming treat
-                do treat.writeExplain();
             }
         }
         return;
@@ -438,8 +435,6 @@ class FlappyBirdGame {
             if (horizontalOverlap & verticalOverlap) {
                 // Collision detected!
                 do treat.treatGot(); // Activate the treat effect
-                // The effect itself is applied in FlappyBirdGame based on treat.treatOn()
-                // (e.g., in updateBirdFallState, calculateScore, findCollision).
             }
         }
         return;

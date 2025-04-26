@@ -947,9 +947,6 @@ push local 0
 push this 14
 call Treat.startComing 3
 pop temp 0
-push this 2
-call Treat.writeExplain 1
-pop temp 0
 label IF_FALSE1
 label IF_FALSE0
 push constant 0
@@ -1020,6 +1017,9 @@ goto IF_FALSE1
 label IF_TRUE1
 push this 2
 call Treat.treatGot 1
+pop temp 0
+push this 2
+call Treat.writeExplain 1
 pop temp 0
 label IF_FALSE1
 label IF_FALSE0
