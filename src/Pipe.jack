@@ -1,169 +1,238 @@
-class Pipe
-{
-  /*
-  Models an individual Pipe object and creates/updates the pipe image.
-  */
-  field int width;                  // Pipe width.
-  field int width_current;          // Current width (for entering/leaving screen).
-  field int width_increment;        // Amount to shift pipe for each step.
-  field int x_offset;               // Current x-coordinate for pipe image.
-  field int gap_size;               // Distance between top and bottom pieces.
-  field int gap_top;                // Coordinate for bottom of top pipe.
-  field int gap_bottom;             // Coordinate for top of bottom pipe.
-  field int screen_width;           // Screen width.
-  field int screen_height;          // Screen height.
+/**
+ * Models an individual Pipe object and creates/updates the pipe image.
+ * Includes methods for movement, drawing, collision detection info, and disposal.
+ * Modified to remove dependency on Sys.time() and fix illegal rectangle coordinate error
+ * by using alternative comparison syntax in the erase method.
+ */
+class Pipe {
+    // Pipe properties
+    field int width;             // Pipe width (total).
+    field int width_current;     // Current visible width (for entering/leaving screen).
+    field int width_increment;   // Amount to shift pipe horizontally per step (speed).
+    field int x_offset;          // Current x-coordinate of the pipe's left edge.
+    field int gap_size;          // Vertical distance between top and bottom pieces.
+    field int gap_top;           // Y-coordinate for the bottom edge of the top pipe piece.
+    field int gap_bottom;        // Y-coordinate for the top edge of the bottom pipe piece.
 
-  /*
-  Construct new Pipe object.
-  */
-  constructor Pipe new(int gap_offset) {
-    let width = 12;
-    let width_increment = 1;
-    let width_current = width_increment;
-    let x_offset = 509;
-    let screen_width = 512;
-    let screen_height = 256;
-    
-    // Increased gap size for easier gameplay
-    let gap_size = 90;
+    // Screen dimensions (could be passed in or constants)
+    field int screen_width;
+    field int screen_height;
 
-    let gap_top = calculateGapTop(gap_offset);
-    let gap_bottom = gap_top + gap_size;
+    /* Construct new Pipe object. */
+    constructor Pipe new(int difficulty_offset, int pipe_width, int pipe_gap) {
+        let width = pipe_width;
+        let width_increment = 1; // Pipe movement speed (pixels per frame)
+        let screen_width = 512;
+        let screen_height = 256;
+        let x_offset = screen_width - width_increment; // Start just off-screen right
+        let width_current = width_increment; // Initially only 1 pixel wide is visible
+        let gap_size = pipe_gap; // Use dynamic gap size passed from game
 
-    return this;
-  }
+        // Calculate the vertical position of the gap
+        // Pass the difficulty_offset to the calculation method
+        let gap_top = calculateGapTop(difficulty_offset);
+        let gap_bottom = gap_top + gap_size;
 
-  /*
-  Calculate coordinate for bottom of top pipe.
-  Ensures that the gap remains within valid screen range.
-  */
-  method int calculateGapTop(int offset)
-  {
-    var int mod, gap_top;
-    
-    let mod = MyMath.mod(offset, 6);
-    let gap_top = (mod + 1) * 30;
+        // Ensure gap doesn't go off-screen (adjust gap_top if necessary)
+        // Cap the bottom of the gap to prevent it from going below the screen
+        if (gap_bottom > (screen_height - 1)) {
+            let gap_bottom = screen_height - 1;
+            let gap_top = gap_bottom - gap_size;
+        }
+        // Cap the top of the gap to prevent it from going above the screen (or too close to the top)
+        // Using a small margin (e.g., 1 pixel from the very top)
+        if (gap_top < 1) {
+            let gap_top = 1;
+            let gap_bottom = gap_top + gap_size;
+            // Re-check bottom boundary after adjusting top in case gap_size is very large
+            if (gap_bottom > (screen_height - 1)) {
+                 // This case should ideally be prevented by appropriate gap_size limits
+                 // but we cap it here as a safeguard.
+                 let gap_bottom = screen_height - 1;
+            }
+        }
 
-    // Ensure the gap does not exceed screen height
-    if (gap_top + gap_size > 255) {
-        return 255 - gap_size;
+        return this;
     }
 
-    return gap_top;
-  }
+    /* Calculate coordinate for bottom of top pipe based on some offset/randomness. */
+    method int calculateGapTop(int offset) {
+        var int range, random_factor, base_height;
+        var int pseudo_random_seed;
 
-  /*
-  Shift the pipe left, erasing its previous position.
-  */
-  method void shift()
-  {
-    if (x_offset < (screen_width - width)) {
-      do Screen.setColor(false);
+        // Calculate the available vertical space for the gap, leaving margins at top and bottom.
+        // screen_height (256) - gap_size - top_margin (20) - bottom_margin (20) = 256 - gap_size - 40
+        let range = screen_height - gap_size - 40;
+        // Ensure a minimum range is available for randomness
+        if (range < 20) { let range = 20; } // Minimum range for gap placement
 
-      // Erase top pipe (ensure within screen bounds)
-      if (gap_top > 0) {
-        do Screen.drawRectangle(x_offset + width_current - width_increment, 0, x_offset + width_current, gap_top);
-      }
+        // Use the provided 'offset' (from the game state, e.g., jumps or pipes)
+        // as the source of variability for pseudo-randomness, since Sys.time() is not available.
+        // Combine offset with a constant to make the sequence less trivial if offset changes slowly.
+        let pseudo_random_seed = offset * 13 + 17; // Using arbitrary prime numbers
 
-      // Erase bottom pipe (ensure within screen bounds)
-      if (gap_bottom < screen_height) {
-        do Screen.drawRectangle(x_offset + width_current - width_increment, gap_bottom, x_offset + width_current, screen_height - 1);
-      }
-    }
-    return;
-  }
+        // Calculate the random factor within the determined range
+        let random_factor = MyMath.mod(pseudo_random_seed, range);
 
-  /*
-  Move pipe image to the left. Deletes image if out of bounds.
-  */
-  method void moveLeft()
-  {
-    do shift();
+        // Define the minimum height for the top pipe piece (top margin)
+        let base_height = 20; // Minimum top margin in pixels
 
-    // Ensure pipe width grows only when it should
-    if (width_current < width) {
-      if (x_offset > 0) {
-        let width_current = width_current + width_increment;
-      }
+        // The gap_top is the base height plus the random offset within the range
+        return base_height + random_factor;
     }
 
-    // Prevent x_offset from going negative
-    if (x_offset > width_increment) {
-      let x_offset = x_offset - width_increment;
-    } else {
-      let x_offset = 0;
-      let width_current = width_current - width_increment;
+    /* Erase the pipe's previous vertical sliver before moving. */
+    method void erase() {
+        var int eraseX_start, eraseX_end;
+        var boolean cond1, cond2, cond3, finalCondition; // Variables to break down the condition
+
+        let eraseX_start = x_offset + width_current - width_increment;
+        let eraseX_end = x_offset + width_current;
+
+        // Evaluate individual conditions for valid erase coordinates using if/else
+        // Using alternative comparison syntax (~ and < or >)
+        if (~(eraseX_start < 0)) { // eraseX_start >= 0
+            let cond1 = true;
+        } else {
+            let cond1 = false;
+        }
+
+        if (~(eraseX_end > 511)) { // eraseX_end <= 511
+            let cond2 = true;
+        } else {
+            let cond2 = false;
+        }
+
+        if (eraseX_start < eraseX_end) { // eraseX_start < eraseX_end
+            let cond3 = true;
+        } else {
+            let cond3 = false;
+        }
+
+
+        // Combine conditions using bitwise AND
+        let finalCondition = cond1 & cond2 & cond3; // Combine all three
+
+        // Check if erase coordinates are valid before drawing
+        if (finalCondition) {
+            do Screen.setColor(false); // White color
+
+            // Erase the rightmost vertical sliver of the top pipe
+            // The area to erase is from eraseX_start to eraseX_end
+            // and from y=0 to gap_top
+            if (gap_top > 0) {
+               do Screen.drawRectangle(eraseX_start, 0, eraseX_end, gap_top);
+            }
+            // Erase the rightmost vertical sliver of the bottom pipe
+            // The area to erase is from eraseX_start to eraseX_end
+            // and from gap_bottom to screen_height - 1
+            if (gap_bottom < screen_height) {
+               do Screen.drawRectangle(eraseX_start, gap_bottom, eraseX_end, screen_height - 1);
+            }
+            do Screen.setColor(true); // Set back to black for subsequent drawing
+        }
+        // If coordinates are invalid, no erasing is performed, which is correct
+        // when the pipe is fully off-screen or coordinates are in transition.
+        return;
     }
 
-    return;
-  }
-
-  /*
-  Get current width.
-  */
-  method int getWidthCurrent()
-  {
-    return width_current;
-  }
-
-  /*
-  Get width shift increment.
-  */
-  method int getWidthIncrement()
-  {
-    return width_increment;
-  }
-
-  /*
-  Get current x-coordinate.
-  */
-  method int getXOffset()
-  {
-    return x_offset;
-  }
-
-  /*
-  Get y-coordinate of top of gap.
-  */
-  method int getGapTop()
-  {
-    return gap_top;
-  }
-
-  /*
-  Get y-coordinate of bottom of gap.
-  */
-  method int getGapBottom()
-  {
-    return gap_bottom;
-  }
-
-  /*
-  Draw pipe at current x-offset.
-  */
-  method void draw()
-  {
-    if (x_offset - width_increment > 0) {
-      do Screen.setColor(true);
-
-      // Draw top pipe (ensure within bounds)
-      if (gap_top > 0) {
-        do Screen.drawRectangle(x_offset - width_increment, 0, x_offset, gap_top);
+    /* Move pipe image to the left. Updates x_offset and width_current. */
+    method void moveLeft() {
+      // Only move and erase if the pipe is still visible or partially visible.
+      if (width_current > 0) {
+          // Erase the trailing edge before moving
+          do erase();
+          
+          // Handle pipe entering the screen
+          if (width_current < width) {
+              if (x_offset > 0) {
+                  let width_current = width_current + width_increment;
+              }
+          }
+          
+          // Move the pipe left or handle it leaving the screen
+          if (x_offset > width_increment) {
+              let x_offset = x_offset - width_increment;
+          } else {
+              let x_offset = 0;
+              let width_current = width_current - width_increment;
+          }
+          
+          // Ensure width_current doesn't go negative
+          if (width_current < 0) { let width_current = 0; }
       }
+      return;
+  }
 
-      // Draw bottom pipe (ensure within bounds)
-      if (gap_bottom < screen_height) {
-        do Screen.drawRectangle(x_offset - width_increment, gap_bottom, x_offset, screen_height - 1);
-      }
+    /* Draw the pipe at its current x_offset and width_current. */
+    method void draw() {
+        var int drawX_start, drawX_end;
+
+        // Calculate the actual drawing coordinates based on current state
+        let drawX_start = x_offset;
+        let drawX_end = x_offset + width_current;
+
+        // Clip drawing coordinates to screen bounds (0 to 511)
+        if (drawX_start < 0) { let drawX_start = 0; }
+        if (drawX_end > 511) { let drawX_end = 511; }
+
+        // Only draw if there's a visible portion of the pipe on screen and coordinates are valid
+        // Valid coordinates require drawX_start < drawX_end
+        if (drawX_start < drawX_end) {
+             do Screen.setColor(true); // Black color for drawing pipes
+
+            // Draw top pipe piece (from y=0 to gap_top)
+            // Only draw if the top pipe piece has height
+            if (gap_top > 0) {
+                do Screen.drawRectangle(drawX_start, 0, drawX_end, gap_top);
+            }
+
+            // Draw bottom pipe piece (from gap_bottom to screen bottom)
+            // Only draw if the bottom pipe piece has height
+            if (gap_bottom < screen_height) {
+                do Screen.drawRectangle(drawX_start, gap_bottom, drawX_end, screen_height - 1);
+            }
+        }
+        return;
     }
-    return;
-  }
 
-  /*
-  Dispose of pipe object.
-  */
-  method void dispose() {
-    do Memory.deAlloc(this);
-    return;
-  }
+    /* Returns true if the pipe is completely off-screen to the left. */
+    method boolean isOffScreen() {
+        // The pipe is considered off-screen and ready for disposal
+        // when its visible width has become zero or less after hitting the left edge (x_offset = 0).
+        return (width_current < 1);
+    }
+
+
+    /* Get current visible width. */
+    method int getWidthCurrent() { return width_current; }
+
+    /* Get width shift increment (speed). */
+    method int getWidthIncrement() { return width_increment; }
+
+    /* Get current x-coordinate (left edge). */
+    method int getXOffset() { return x_offset; }
+
+    /* Get y-coordinate of the bottom of the top pipe piece. */
+    method int getGapTop() { return gap_top; }
+
+    /* Get y-coordinate of the top of the bottom pipe piece. */
+    method int getGapBottom() { return gap_bottom; }
+
+    /* Dispose of pipe object (erase from screen and deallocate memory). */
+    method void dispose() {
+        // Only erase if the pipe is still visible on screen
+        if (~isOffScreen()) { // If not off-screen
+            // Implement an erase logic that covers the pipe's current drawn area
+            // This might involve drawing white over the pipe's coordinates.
+            do Screen.setColor(false); // White color for erasing
+            // Draw a white rectangle over the pipe's last drawn position
+            // You'll need to calculate the rectangle based on x_offset and width.
+            do Screen.drawRectangle(Math.max(0, x_offset), 0, Math.min(511, x_offset + width), screen_height - 1);
+            do Screen.setColor(true); // Set back to black
+        }
+
+        do Memory.deAlloc(this);
+        return;
+    }
 }

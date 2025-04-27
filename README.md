@@ -11,9 +11,9 @@ A **Flappy Bird** game built using the **Jack language** in the Nand2Tetris proj
 
 ## How to Play  
 
-1. Load the game in the **Nand2Tetris VM Emulator**.  
+1. Load the **bin** folder in the **Nand2Tetris VM Emulator**.  
 2. Use the **space bar** (or an assigned key) to make the bird jump.  
-3. Avoid obstacles and collect power-ups to enhance gameplay.  
+3. Collect power-ups to enhance gameplay.  
 4. Score points by passing through pipes successfully.  
 
 ## Implementation Details  
@@ -28,5 +28,4 @@ A **Flappy Bird** game built using the **Jack language** in the Nand2Tetris proj
 /HackFlappyBird
 │── /src          # Jack source files
 │── /bin          # Compiled VM files
-│── /docs         # Project documentation
 │── README.md     # Project overview
