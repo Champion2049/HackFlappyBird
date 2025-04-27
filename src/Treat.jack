@@ -266,7 +266,7 @@ constructor Treat new() {
 
       // --- Your existing logic to set the explanation string ---
       if (treatComing = 2) { // Bird Slow Down
-          let explanation = "Slow motion activated!";
+          let explanation = "Slow falling activated!";
       } else {
           if (treatComing = 3) { // Score Doubled
               let explanation = "Score Doubled!";

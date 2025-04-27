@@ -133,6 +133,8 @@ class FlappyBirdGame {
                     // Reset level defaults
                     let pipe_width = 15;
                     let pipe_gap = 120;
+                    let total_score = 0; // Reset score
+                    let bonus = 0;       // Reset bonus score
                     do initializeGameState(); // Reset game state
                     do waitForGameToStart();  // Wait for player input to start again
                     let last_key = 0; // Reset last_key after restarting

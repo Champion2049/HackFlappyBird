@@ -421,7 +421,7 @@ eq
 if-goto IF_TRUE0
 goto IF_FALSE0
 label IF_TRUE0
-push constant 22
+push constant 23
 call String.new 1
 push constant 83
 call String.appendChar 2
@@ -433,17 +433,19 @@ push constant 119
 call String.appendChar 2
 push constant 32
 call String.appendChar 2
-push constant 109
+push constant 102
 call String.appendChar 2
-push constant 111
+push constant 97
 call String.appendChar 2
-push constant 116
+push constant 108
+call String.appendChar 2
+push constant 108
 call String.appendChar 2
 push constant 105
 call String.appendChar 2
-push constant 111
-call String.appendChar 2
 push constant 110
+call String.appendChar 2
+push constant 103
 call String.appendChar 2
 push constant 32
 call String.appendChar 2
