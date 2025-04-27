@@ -360,10 +360,6 @@ push this 1
 push constant 2
 eq
 push this 1
-push constant 3
-eq
-or
-push this 1
 push constant 4
 eq
 or
@@ -386,7 +382,34 @@ pop temp 0
 push constant 0
 return
 label IF_FALSE1
+goto IF_END0
 label IF_FALSE0
+push this 1
+push constant 3
+eq
+if-goto IF_TRUE2
+goto IF_FALSE2
+label IF_TRUE2
+push constant 1
+pop local 0
+push this 2
+push constant 1
+add
+pop this 2
+push this 2
+push local 0
+gt
+if-goto IF_TRUE3
+goto IF_FALSE3
+label IF_TRUE3
+push pointer 0
+call Treat.treatDone 1
+pop temp 0
+push constant 0
+return
+label IF_FALSE3
+label IF_FALSE2
+label IF_END0
 push constant 0
 return
 function Treat.writeExplain 7

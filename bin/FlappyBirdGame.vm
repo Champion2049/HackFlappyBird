@@ -1,32 +1,36 @@
 function FlappyBirdGame.new 0
-push constant 18
+push constant 20
 call Memory.alloc 1
 pop pointer 0
 push constant 150
-pop this 7
+pop this 9
 call Scoreboard.new 0
 pop this 1
 push constant 10
 call Array.new 1
 pop this 3
 push constant 0
-pop this 8
-push constant 100
-pop this 9
-push constant 0
 pop this 10
-push constant 1
-pop this 15
-push constant 0
+push constant 100
 pop this 11
 push constant 0
-pop this 16
-push constant 15
 pop this 12
-push constant 120
+push constant 1
+pop this 17
+push constant 0
 pop this 13
-push constant 112
+push constant 0
+pop this 18
+push constant 15
 pop this 14
+push constant 120
+pop this 15
+push constant 112
+pop this 16
+push constant 0
+pop this 5
+push constant 0
+pop this 6
 push pointer 0
 return
 function FlappyBirdGame.displayInstructions 0
@@ -280,7 +284,7 @@ push constant 32
 call String.appendChar 2
 call Output.printString 1
 pop temp 0
-push this 16
+push this 18
 call Output.printInt 1
 pop temp 0
 push constant 0
@@ -316,10 +320,10 @@ and
 if-goto IF_TRUE0
 goto IF_FALSE0
 label IF_TRUE0
-push this 15
+push this 17
 push constant 1
 add
-pop this 15
+pop this 17
 push this 0
 call FlappyBird.moveUp 1
 pop temp 0
@@ -390,13 +394,13 @@ if-goto IF_TRUE3
 goto IF_FALSE3
 label IF_TRUE3
 push local 2
-push this 16
+push this 18
 gt
 if-goto IF_TRUE4
 goto IF_FALSE4
 label IF_TRUE4
 push local 2
-pop this 16
+pop this 18
 label IF_FALSE4
 push pointer 0
 call FlappyBirdGame.displayScore 1
@@ -405,9 +409,9 @@ push constant 3000
 call Sys.wait 1
 pop temp 0
 push constant 15
-pop this 12
+pop this 14
 push constant 120
-pop this 13
+pop this 15
 push pointer 0
 call FlappyBirdGame.initializeGameState 1
 pop temp 0
@@ -482,11 +486,11 @@ if-goto IF_TRUE0
 goto IF_FALSE0
 label IF_TRUE0
 push constant 4
-pop this 17
+pop this 19
 push constant 50
-pop this 12
+pop this 14
 push constant 70
-pop this 13
+pop this 15
 goto IF_END0
 label IF_FALSE0
 push argument 1
@@ -496,11 +500,11 @@ if-goto IF_TRUE1
 goto IF_FALSE1
 label IF_TRUE1
 push constant 3
-pop this 17
+pop this 19
 push constant 40
-pop this 12
+pop this 14
 push constant 75
-pop this 13
+pop this 15
 goto IF_END1
 label IF_FALSE1
 push argument 1
@@ -510,11 +514,11 @@ if-goto IF_TRUE2
 goto IF_FALSE2
 label IF_TRUE2
 push constant 2
-pop this 17
+pop this 19
 push constant 35
-pop this 12
+pop this 14
 push constant 90
-pop this 13
+pop this 15
 goto IF_END2
 label IF_FALSE2
 push argument 1
@@ -524,19 +528,19 @@ if-goto IF_TRUE3
 goto IF_FALSE3
 label IF_TRUE3
 push constant 1
-pop this 17
+pop this 19
 push constant 25
-pop this 12
+pop this 14
 push constant 100
-pop this 13
+pop this 15
 goto IF_END3
 label IF_FALSE3
 push constant 0
-pop this 17
+pop this 19
 push constant 15
-pop this 12
+pop this 14
 push constant 120
-pop this 13
+pop this 15
 label IF_END3
 label IF_END2
 label IF_END1
@@ -557,7 +561,7 @@ push this 0
 call FlappyBird.dispose 1
 pop temp 0
 label IF_FALSE0
-push this 7
+push this 9
 call FlappyBird.new 1
 pop this 0
 push this 2
@@ -577,7 +581,7 @@ push constant 0
 pop local 0
 label WHILE_EXP0
 push local 0
-push this 8
+push this 10
 lt
 not
 if-goto WHILE_END0
@@ -608,19 +612,19 @@ pop local 0
 goto WHILE_EXP0
 label WHILE_END0
 push constant 0
-pop this 8
-push constant 0
-pop this 11
-push constant 1
-pop this 5
-push constant 1
-pop this 6
-push this 9
 pop this 10
-push constant 112
-pop this 14
 push constant 0
-pop this 15
+pop this 13
+push constant 1
+pop this 7
+push constant 1
+pop this 8
+push this 11
+pop this 12
+push constant 112
+pop this 16
+push constant 0
+pop this 17
 call Screen.clearScreen 0
 pop temp 0
 push pointer 0
@@ -655,16 +659,16 @@ label IF_TRUE0
 push constant 10
 pop local 0
 label IF_FALSE0
-push this 6
+push this 8
 push local 0
 gt
 if-goto IF_TRUE1
 goto IF_FALSE1
 label IF_TRUE1
 push constant 1
-pop this 6
+pop this 8
 label IF_FALSE1
-push this 6
+push this 8
 push local 0
 eq
 if-goto IF_TRUE2
@@ -674,20 +678,20 @@ push this 0
 call FlappyBird.moveDown 1
 pop temp 0
 push constant 1
-pop this 6
+pop this 8
 goto IF_END2
 label IF_FALSE2
-push this 6
+push this 8
 push constant 1
 add
-pop this 6
+pop this 8
 label IF_END2
 push constant 0
 return
 function FlappyBirdGame.updateBirdWingState 0
 push argument 0
 pop pointer 0
-push this 5
+push this 7
 push constant 5
 eq
 if-goto IF_TRUE0
@@ -697,13 +701,13 @@ push this 0
 call FlappyBird.cycleWingState 1
 pop temp 0
 push constant 1
-pop this 5
+pop this 7
 goto IF_END0
 label IF_FALSE0
-push this 5
+push this 7
 push constant 1
 add
-pop this 5
+pop this 7
 label IF_END0
 push constant 0
 return
@@ -714,7 +718,7 @@ push constant 0
 pop local 0
 label WHILE_EXP0
 push local 0
-push this 8
+push this 10
 lt
 not
 if-goto WHILE_END0
@@ -741,7 +745,7 @@ return
 function FlappyBirdGame.disposeUnseenPipe 1
 push argument 0
 pop pointer 0
-push this 8
+push this 10
 push constant 0
 eq
 if-goto IF_TRUE0
@@ -771,15 +775,15 @@ label IF_TRUE2
 push this 4
 call Pipe.dispose 1
 pop temp 0
-push this 8
+push this 10
 push constant 1
 sub
-pop this 8
+pop this 10
 push constant 0
 pop local 0
 label WHILE_EXP0
 push local 0
-push this 8
+push this 10
 lt
 not
 if-goto WHILE_END0
@@ -803,7 +807,7 @@ add
 pop local 0
 goto WHILE_EXP0
 label WHILE_END0
-push this 8
+push this 10
 push this 3
 add
 push constant 0
@@ -818,30 +822,30 @@ return
 function FlappyBirdGame.createNewPipe 1
 push argument 0
 pop pointer 0
-push this 10
-push this 9
+push this 12
+push this 11
 gt
 if-goto IF_TRUE0
 goto IF_FALSE0
 label IF_TRUE0
-push this 8
+push this 10
 push constant 10
 lt
 if-goto IF_TRUE1
 goto IF_FALSE1
 label IF_TRUE1
-push this 8
+push this 10
 push this 3
 add
+push this 17
+push this 14
 push this 15
-push this 12
-push this 13
 call Pipe.new 3
 pop temp 0
 pop pointer 1
 push temp 0
 pop that 0
-push this 8
+push this 10
 push this 3
 add
 pop pointer 1
@@ -849,27 +853,27 @@ push that 0
 pop this 4
 push this 4
 call Pipe.getGapTop 1
-push this 13
+push this 15
 push constant 2
 call Math.divide 2
 add
 pop local 0
 push local 0
-pop this 14
-push this 8
+pop this 16
+push this 10
 push constant 1
 add
-pop this 8
-push this 11
-push constant 1
-add
-pop this 11
-push constant 0
 pop this 10
+push this 13
+push constant 1
+add
+pop this 13
+push constant 0
+pop this 12
 label IF_FALSE1
 goto IF_END0
 label IF_FALSE0
-push this 8
+push this 10
 push constant 0
 gt
 if-goto IF_TRUE2
@@ -888,24 +892,24 @@ not
 if-goto IF_TRUE3
 goto IF_FALSE3
 label IF_TRUE3
-push this 10
+push this 12
 push this 4
 call Pipe.getWidthIncrement 1
 add
-pop this 10
+pop this 12
 goto IF_END3
 label IF_FALSE3
-push this 10
+push this 12
 push constant 1
 add
-pop this 10
+pop this 12
 label IF_END3
 goto IF_END2
 label IF_FALSE2
-push this 10
+push this 12
 push constant 1
 add
-pop this 10
+pop this 12
 label IF_END2
 label IF_END0
 push constant 0
@@ -927,8 +931,8 @@ and
 if-goto IF_TRUE0
 goto IF_FALSE0
 label IF_TRUE0
-push this 15
-push this 11
+push this 17
+push this 13
 add
 push this 0
 call FlappyBird.getYOffset 1
@@ -944,11 +948,11 @@ lt
 if-goto IF_TRUE1
 goto IF_FALSE1
 label IF_TRUE1
-push this 15
+push this 17
 push this 0
 call FlappyBird.getYOffset 1
 call Math.multiply 2
-push this 11
+push this 13
 add
 push constant 5
 add
@@ -959,7 +963,7 @@ add
 pop local 0
 push this 2
 push local 0
-push this 14
+push this 16
 call Treat.startComing 3
 pop temp 0
 label IF_FALSE1
@@ -1040,13 +1044,13 @@ return
 function FlappyBirdGame.calculateScore 2
 push argument 0
 pop pointer 0
-push this 11
+push this 13
 pop local 0
 push constant 0
 pop local 1
 label WHILE_EXP0
 push local 1
-push this 8
+push this 10
 lt
 not
 if-goto WHILE_END0
@@ -1090,18 +1094,17 @@ label IF_TRUE1
 push local 0
 push constant 2
 call Math.multiply 2
-pop local 0
+pop local 1
+push this 6
+push local 1
+add
+pop this 6
 label IF_FALSE1
 push local 0
-push constant 0
-lt
-if-goto IF_TRUE2
-goto IF_FALSE2
-label IF_TRUE2
-push constant 0
-pop local 0
-label IF_FALSE2
-push local 0
+push this 6
+add
+pop this 5
+push this 5
 return
 function FlappyBirdGame.findCollision 1
 push argument 0
@@ -1139,7 +1142,7 @@ push constant 0
 pop local 0
 label WHILE_EXP0
 push local 0
-push this 8
+push this 10
 lt
 not
 if-goto WHILE_END0
@@ -1255,7 +1258,7 @@ push constant 0
 pop local 0
 label WHILE_EXP0
 push local 0
-push this 8
+push this 10
 lt
 not
 if-goto WHILE_END0

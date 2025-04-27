@@ -228,7 +228,7 @@ constructor Treat new() {
 
         // Only tick if a treat is active (Types 2, 3, 4 have timed durations)
         // Treat 1 (Easy Map) is consumed on collision and doesn't use the timer for duration.
-        if ((treatOn = 2) | (treatOn = 3) | (treatOn = 4)) {
+        if ((treatOn = 2) | (treatOn = 4)) {
             let treatTimer = treatTimer + 1;
 
             // --- Check for Expiration ---
@@ -239,6 +239,19 @@ constructor Treat new() {
 
             // --- Blinking Indicator Logic (for timed treats 2, 3 & 4) ---
             // Blinking logic removed as treatMarkOn/Off are removed.
+        }
+        else {
+            if (treatOn = 3) {
+                // Treat 3 (Score Doubled) doesn't have a timer, but you can add logic here if needed
+                // For now, just return as it doesn't need to blink or expire
+                let duration = 1;
+                let treatTimer = treatTimer + 1;
+                // --- Check for Expiration ---
+                if (treatTimer > duration) {
+                    do treatDone(); // Treat effect expires
+                    return;         // Exit after handling expiration
+                }
+            }
         }
         return;
     }
