@@ -466,12 +466,6 @@ class FlappyBirdGame {
         if (treat.treatOn() = 3) {
             let score = score * 2;
         }
-
-        // Ensure score doesn't go below zero (shouldn't happen with total_pipes based scoring)
-        if (score < 0) {
-            let score = 0;
-        }
-
         return score;
     }
 
