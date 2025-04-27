@@ -1,0 +1,332 @@
+/**
+ * This class adds a special treat (power-up) to the game.
+ * Handles the state, movement, collision detection, and effects of treats.
+ * Assumes a 'DrawTreat' class exists for drawing the treat images.
+ * Includes fixes for duration and positioning, and robust coordinate validation.
+ * Corrected treat Y position calculation and message display.
+ * Removed treatAtBird logic as collision is handled in FlappyBirdGame.
+ * Enhanced visual clearing logic in clearTreatVisual for more reliable erasing.
+ * Added clearing based on initial position when a treat is spawned to prevent duplicate visuals.
+ * Removed treatMarkOn and treatMarkOff methods and their calls entirely.
+ * Removed all logic specific to Treat 1 (Easy Map).
+ */
+class Treat {
+    // Treat State Fields
+    field int treatComing; // 0 = none, 2-4 = type of treat moving onto screen (Treat 1 removed)
+    field int treatOn;     // 0 = none active, 2-4 = type of treat currently active (Treat 1 removed)
+    field int treatTimer;  // Counts frames/ticks while a treat is active (for duration)
+
+    // Position and Movement Fields
+    field int treatXpos;   // Current X-coordinate (left edge) of the treat image
+    field int treatYpos;   // Current Y-coordinate (top edge) of the treat image
+    field int treatSpeed;  // Horizontal speed (pixels per frame), should match pipe speed
+
+    // Treat Visual Properties (Assume fixed size for collision)
+    field int treatWidth;
+    field int treatHeight;
+
+    // Screen dimensions (constants for validation)
+    field int screen_width;
+    field int screen_height;
+
+    // Previous position fields for more reliable erasing
+    field int prevTreatXpos;
+    field int prevTreatYpos;
+
+
+/* Constructor for a new Treat object. */
+constructor Treat new() {
+    let treatComing = 0;     // No treat initially
+    let treatOn = 0;         // No treat active initially
+    let treatTimer = 0;
+    let treatXpos = 511;     // Start fully off-screen right
+    let treatYpos = 0;       // Default Y position (will be updated by startComing)
+    let treatSpeed = 1;      // Match default pipe speed
+    let treatWidth = 32;     // Assume 32x32 pixel treat image
+    let treatHeight = 32;
+    let screen_width = 512;  // Screen width for validation
+    let screen_height = 256; // Screen height for validation
+
+    // Initialize previous positions (match current positions)
+    let prevTreatXpos = treatXpos;
+    let prevTreatYpos = treatYpos;
+    return this;
+}
+
+    /* Starts a specific treat type coming onto the screen at a given Y position. */
+    method void startComing(int treatNum, int gapMiddleY) {
+        // Only start if currently inactive (using treatComing field)
+        // Ensure treatNum is not 1, as Treat 1 logic is removed.
+        if ((treatComing = 0) & ~(treatNum = 1)) {
+            // First, clear any previous treat visuals completely
+            do clearTreatVisual(); // Clear any lingering visuals
+            let treatComing = treatNum; // Set the type of treat (2-4)
+            let treatOn = 0;            // Ensure no treat is marked as 'active' yet
+            let treatTimer = 0;         // Reset timer
+            
+            // Start FULLY off-screen to the right
+            let treatXpos = screen_width; // Changed from screen_width - 5 to fully off-screen
+            
+            // Calculate the treat's top Y position based on the pipe gap's middle Y
+            let treatYpos = gapMiddleY - (treatHeight / 2);
+
+            // Ensure Y position is valid (within screen bounds)
+            if (treatYpos < 0) { let treatYpos = 0; }
+            if ((treatYpos + treatHeight) > (screen_height - 1)) {
+                let treatYpos = screen_height - 1 - treatHeight;
+            }
+
+            // Initialize previous position to match current position
+            let prevTreatXpos = treatXpos; 
+            let prevTreatYpos = treatYpos;
+        }
+        return;
+    }
+    
+    // --- Getters for State and Position ---
+    method int treatOn() { return treatOn; }     // Returns the type of treat currently active (0 if none)
+    method int treatComing() { return treatComing; } // Returns the type of treat incoming (0 if none)
+    method int getTreatXpos() { return treatXpos; } // Returns the current X position (left edge)
+    method int getTreatYpos() { return treatYpos; } // Returns the current Y position (top edge)
+    method int getTreatWidth() { return treatWidth; } // Returns the treat width
+    method int getTreatHeight() { return treatHeight; } // Returns the treat height
+
+    /* Deallocates the Treat object's memory. */
+    method void dispose() {
+        // Erase any lingering visual elements if necessary
+        // Use the clearTreatVisual method with validation
+        do clearTreatVisual();
+        // treatMarkOff and treatMarkOn methods removed.
+        do clearExplain(); // Assuming clearExplain uses Output, which is generally safe
+        do Memory.deAlloc(this);
+        return;
+    }
+
+    /* Moves the treat left across the screen if it's 'coming'. */
+    method void treatAdvance() {
+        if (treatComing = 0) { return; } // Do nothing if no treat is coming
+
+        // Erase the treat from its previous position
+        do clearTreatVisual();
+
+        // Update previous position *before* moving
+        let prevTreatXpos = treatXpos;
+        let prevTreatYpos = treatYpos;
+
+        // Move the treat horizontally
+        let treatXpos = treatXpos - treatSpeed;
+
+        // Check if the treat has moved completely off-screen to the left
+        if ((treatXpos + treatWidth) < 0) {
+            do clearTreatVisual(); // Ensure it's erased if it goes off-screen
+            let treatComing = 0;   // Treat missed, reset state
+            let treatXpos = screen_width; // Reset X position to fully off-screen right
+            let prevTreatXpos = treatXpos; // Make sure previous matches current
+            do clearExplain();     // Clear explanation if treat is missed
+        } else {
+            // Only draw if at least part of the treat would be visible on screen
+            if (treatXpos < screen_width) {
+                do draw();
+            }
+        }
+        return;
+    }
+
+    /* Activates the treat effect when the bird collects it. */
+    method void treatGot() {
+        // Only apply effect if treat is in 'coming' state
+        if (treatComing > 1) { // treatComing will be 2, 3, or 4
+            do clearTreatVisual();    // Erase the treat image from the screen using validated method
+            do writeExplain();      // Show the explanation text for the treat effect
+            do Sys.wait(1000); // Wait for 1 second before applying effect
+            let treatOn = treatComing; // Set the 'active' treat type (2, 3, or 4)
+            let treatComing = 0;     // Treat is no longer 'coming'
+            let treatTimer = 0;      // Start the timer for timed effects
+            let treatXpos = screen_width;     // Reset X position to fully off-screen right
+            let prevTreatXpos = screen_width; // Reset previous X position too
+
+            // treatMarkOn and treatMarkOff methods removed.
+            // Show indicator mark logic removed.
+
+            // Clear the explanation text once collected
+            do clearExplain();
+
+        }
+        return;
+    }
+
+    /* Erases the treat image from the screen with coordinate validation. */
+    method void clearTreatVisual() {
+        var int eraseX_start, eraseY_start, eraseX_end, eraseY_end;
+        var boolean validX, validY, validRect; // Variables for validation
+
+        // Calculate the rectangle coordinates to erase based on the *previous* position
+        let eraseX_start = prevTreatXpos;
+        let eraseY_start = prevTreatYpos;
+        // The end coordinates should be calculated based on the start and the size
+        let eraseX_end = prevTreatXpos + treatWidth;
+        let eraseY_end = prevTreatYpos + treatHeight;
+
+        // --- Coordinate Clipping ---
+        // Clip the calculated rectangle to be within screen bounds
+        if (eraseX_start < 0) { let eraseX_start = 0; }
+        if (eraseY_start < 0) { let eraseY_start = 0; }
+
+        if (eraseX_end > screen_width) { let eraseX_end = screen_width; }
+        if (eraseY_end > screen_height) { let eraseY_end = screen_height; }
+
+        // --- Validation Check ---
+        // Check if the clipped coordinates form a valid rectangle (start < end)
+        let validX = (eraseX_start < eraseX_end);
+        let validY = (eraseY_start < eraseY_end);
+        let validRect = validX & validY; // Both X and Y dimensions must be valid
+
+        // Only draw the rectangle if the clipped coordinates are valid
+        if (validRect) {
+            do Screen.setColor(false); // White color for erasing
+            // drawRectangle uses inclusive coordinates, so end - 1 is correct if using width/height
+            do Screen.drawRectangle(eraseX_start, eraseY_start, eraseX_end - 1, eraseY_end - 1);
+            do Screen.setColor(true); // Set back to black
+        }
+        // If coordinates are invalid after clipping, no erasing is performed,
+        // which is the correct behavior for off-screen or zero-size areas.
+        return;
+    }
+
+    /* Returns 1 if the treat is horizontally aligned with the bird's position, 0 otherwise. */
+    // This method is no longer used for collision detection in FlappyBirdGame.
+    // Collision is now handled directly in FlappyBirdGame.checkTreatCollision.
+    // Keeping it as a placeholder or for other potential uses, but its return value
+    // is not used for collision in the main game loop anymore.
+    method int treatAtBird() {
+        // Bird's fixed X position range (approximate based on original comments)
+        var int birdMinX, birdMaxX;
+        let birdMinX = 224;
+        let birdMaxX = 256; // Assuming bird is around 32 pixels wide at X=224
+
+        // Check if treat's X-range overlaps with bird's X-range
+        if (((treatXpos + treatWidth) > birdMinX) & (treatXpos < birdMaxX)) {
+             return 1; // Horizontal overlap
+        }
+        return 0; // No horizontal overlap
+    }
+
+    /* Cleans up the state when a treat effect finishes or is consumed. */
+    method void treatDone() {
+        let treatOn = 0;     // Deactivate the treat
+        let treatTimer = 0;  // Reset the timer
+        // treatMarkOff method removed.
+        do clearExplain();   // Clear any related explanation text (assuming it uses Output safely)
+        return;
+    }
+
+    /* Updates the timer for active treats and handles expiration/blinking. */
+    method void timerTick() {
+        var int duration;
+        // Set duration based on treat type if needed, or use a default
+        let duration = 300; // Default duration in ticks (adjust as needed)
+
+        // Only tick if a treat is active (Types 2, 3, 4 have timed durations)
+        // Treat 1 (Easy Map) is consumed on collision and doesn't use the timer for duration.
+        if ((treatOn = 2) | (treatOn = 3) | (treatOn = 4)) {
+            let treatTimer = treatTimer + 1;
+
+            // --- Check for Expiration ---
+            if (treatTimer > duration) {
+                do treatDone(); // Treat effect expires
+                return;         // Exit after handling expiration
+            }
+
+            // --- Blinking Indicator Logic (for timed treats 2, 3 & 4) ---
+            // Blinking logic removed as treatMarkOn/Off are removed.
+        }
+        return;
+    }
+
+
+    /* Displays text explaining the incoming treat. */
+    method void writeExplain() {
+      // Assuming treatComing is already set
+      var String explanation;
+      var int rectX1, rectY1, rectX2, rectY2;
+      var int textRow, textCol;
+
+      // --- Your existing logic to set the explanation string ---
+      if (treatComing = 2) { // Bird Slow Down
+          let explanation = "Slow motion activated!";
+      } else {
+          if (treatComing = 3) { // Score Doubled
+              let explanation = "Score Doubled!";
+          } else {
+              if (treatComing = 4) { // Helmet / Protection
+                  let explanation = "You are Invincible!";
+              } else {
+                  let explanation = ""; // Or some default message
+              }
+          }
+      }
+      // --- End of your existing logic ---
+
+      // --- Determine rectangle and text position (example coordinates) ---
+      // You will likely need to adjust these based on your screen layout
+      let rectX1 = 50;
+      let rectY1 = 100;
+      let rectX2 = 350; // Make wide enough for the longest message
+      let rectY2 = 120; // Tall enough for one line of text
+
+      // Calculate text position within the rectangle (add some padding)
+      // Character width is typically 8 pixels, height 11 pixels in Jack OS
+      let textCol = (rectX1 + 5) / 8; // 5 pixels padding from left
+      let textRow = (rectY1 + 5) / 11; // 5 pixels padding from top
+
+      // --- Draw the white rectangle ---
+      do Screen.setColor(false); // Set color to white
+      do Screen.drawRectangle(rectX1, rectY1, rectX2, rectY2);
+
+      // --- Print the text inside the rectangle ---
+      do Screen.setColor(true); // Set color to black for text (or another visible color)
+      do Output.moveCursor(textRow, textCol); // Move cursor to the text position
+      do Output.printString(explanation);
+      return;
+    }
+
+    /* Clears the area where explanation text is displayed. */
+    method void clearExplain() {
+        do Output.moveCursor(21, 0);
+        do Output.printString("                                                "); // Increased spaces
+        return;
+    }
+
+    /* treatMarkOn method removed. */
+    /* treatMarkOff method removed. */
+
+  method void draw() {
+      var int drawX_start, drawY_start;
+      var boolean validPosition;
+
+      // Only proceed if treatComing is valid (2-4)
+      if ((treatComing < 2) | (treatComing > 4)) {
+          return; // Invalid treat type, don't draw anything
+      }
+
+      // Check if position is reasonable (at least partially on screen)
+      let validPosition = (treatXpos < screen_width) & 
+                          ((treatXpos + treatWidth) > 0) &
+                          (treatYpos < screen_height) &
+                          ((treatYpos + treatHeight) > 0);
+
+      if (validPosition) {
+          // Use direct position without complicated calculations
+          let drawX_start = treatXpos;
+          let drawY_start = treatYpos;
+          
+          // Ensure we're on screen (only clip if needed)
+          if (drawX_start < 0) { let drawX_start = 0; }
+          if (drawY_start < 0) { let drawY_start = 0; }
+
+          // Now draw the treat at the validated position
+          do DrawTreat.drawTreat(treatComing, drawX_start, drawY_start);
+      }
+      return;
+  }
+}

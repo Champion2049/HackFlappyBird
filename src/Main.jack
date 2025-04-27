@@ -1,0 +1,23 @@
+class Main
+{
+  function void main() {
+    var FlappyBirdGame game;
+    var char key;
+
+    do Splash.show();
+
+    // Wait for Enter key (ASCII 128)
+    let key = 0;
+    while (~(key = 128)) {
+      let key = Keyboard.keyPressed();
+      do Sys.wait(100);
+    }
+
+    do Screen.clearScreen();
+    let game = FlappyBirdGame.new();
+    do game.run();
+    do game.dispose();
+
+    return;
+  }
+}
