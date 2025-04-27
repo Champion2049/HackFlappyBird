@@ -108,13 +108,11 @@ class FlappyBirdGame {
                 do disposeUnseenPipe();
                 // Create new pipe object if existing last pipe has moved far enough.
                 do createNewPipe();
-
                 // Handle treat logic
                 do spawnTreatIfNeeded();  // Decide if a treat should appear
                 do treat.treatAdvance();  // Move the treat if it's coming
                 do checkTreatCollision(); // Check if the bird collected the treat
                 do treat.timerTick();     // Update active treat duration
-
                 // Update score and level
                 let score = calculateScore();
                 do updateLevel(score);
@@ -142,15 +140,11 @@ class FlappyBirdGame {
                 } else {
                     // If no collision, draw the updated game state
                     do bird.draw();
-                    // Pipes and Treat are drawn within their respective update methods
                 }
             }
-
             // Remember the last key pressed for jump detection
             let last_key = key;
-
-            // Small delay for game speed control
-            do Sys.wait(20); // Increased wait time slightly for smoother gameplay, adjust as needed
+            do Sys.wait(20); // Game speed
         } // End of while loop
 
         // Cleanup before exiting the program
@@ -313,16 +307,13 @@ class FlappyBirdGame {
     /* Remove Pipe object once it has exited the screen. */
     method void disposeUnseenPipe() {
         var int i;
-
         if (count_pipes = 0) {
             return; // No pipes to remove
         }
-
         let pipe = pipes[0]; // Always check the first pipe in the array
-
         // Check if the pipe is completely off-screen to the left
         if (~(pipe = null)) { // Safety check before calling method on pipe
-            if (pipe.isOffScreen()) { // Assumes Pipe class has isOffScreen() method
+            if (pipe.isOffScreen()) {
                 do pipe.dispose();  // Deallocate memory (erase is called in dispose)
                 let count_pipes = count_pipes - 1;
 
@@ -341,44 +332,31 @@ class FlappyBirdGame {
     /* Create new pipe to go onscreen. */
     method void createNewPipe() {
         var int pipeMiddleY;
-
-        // Check if enough distance has passed since the last pipe
         if (dist_after_last_pipe > dist_between_pipes) { // Use > for safety
-            // Ensure there's space in the pipes array
-            if (count_pipes < 10) { // Assuming max 10 pipes
+            if (count_pipes < 10) { // Max 10 pipes
                 // Create the new pipe object
                 let pipes[count_pipes] = Pipe.new(jumps, pipe_width, pipe_gap);
                 let pipe = pipes[count_pipes];
-
-                // Calculate the middle Y position for the NEW pipe's gap
-                // Assuming pipe.getGapTop() is the top edge of the gap
                 let pipeMiddleY = pipe.getGapTop() + (pipe_gap / 2); // Center of the gap
-
-                // *** Store this value for use when spawning a treat ***
                 let lastPipeMiddleY = pipeMiddleY;
-
                 // Update counters and reset distance
                 let count_pipes = count_pipes + 1;
                 let total_pipes = total_pipes + 1;
                 let dist_after_last_pipe = 0; // Reset distance counter
-            } // else: array is full, cannot create new pipe yet
+            }
         } else {
-            // If no new pipe created, increment distance based on pipe speed
-            // Assumes pipe speed is consistent (e.g., 1 pixel per frame)
-            // If pipes[0] doesn't exist, this will fail. Need safety check.
             if (count_pipes > 0) {
                let pipe = pipes[0]; // Should use speed from any pipe, assume uniform speed
                // Check if pipe is not null before accessing it
                if (~(pipe = null)) {
-                 let dist_after_last_pipe = dist_after_last_pipe + pipe.getWidthIncrement(); // Assumes getWidthIncrement is speed
+                 let dist_after_last_pipe = dist_after_last_pipe + pipe.getWidthIncrement();
                } else {
                     // Handle case where pipe[0] might be null unexpectedly
-                    // Maybe reset dist_after_last_pipe or use a default speed?
-                    let dist_after_last_pipe = dist_after_last_pipe + 1; // Default speed assumption
+                    let dist_after_last_pipe = dist_after_last_pipe + 1
                }
             } else {
                     // If no pipes exist yet, increment distance to trigger first pipe creation
-                    let dist_after_last_pipe = dist_after_last_pipe + 1; // Default speed assumption
+                    let dist_after_last_pipe = dist_after_last_pipe + 1;
             }
         }
         return;
@@ -387,25 +365,16 @@ class FlappyBirdGame {
     /* Check if we should spawn a treat (if none is currently active/coming) */
     method void spawnTreatIfNeeded() {
         var int randomNumber;
-        var int spawnChance; // e.g., 3 => 3 in 100 chance to spawn a treat
-        
+        var int spawnChance; // e.g., 3 => 3 in 100 chance to spawn a treat     
         let spawnChance = 3; // Adjust probability as needed
-
-        // Only spawn a treat if none is currently coming or active
-        // Using treat.treatComing() and treat.treatOn() to check if a treat is in play
         if ((treat.treatComing() = 0) & (treat.treatOn() = 0)) {
-            // Use a combination of game state variables for pseudo-randomness
-            // Replacing Sys.time() which is not available in Jack
-            // Adding jumps, total_pipes, and bird Y for variability
+            // Generate a random number based on game state variables
+            // New random number generation logic
             let randomNumber = MyMath.mod(jumps + total_pipes + bird.getYOffset(), 100) + 1;
-
             // Check against spawn chance
             if (randomNumber < spawnChance) {
-                // Generate a random treat type (1-4) using game state variables
+                // Generate a random treat type (2-4) using game state variables
                 let randomNumber = MyMath.mod(jumps * bird.getYOffset() + total_pipes + 5, 4) + 1; // Added 5 for more variation
-
-                // *** Start the treat, passing the type and the stored pipe gap middle Y position ***
-                // The Treat class will calculate its own Ypos based on this middle Y and its height.
                 do treat.startComing(randomNumber, lastPipeMiddleY);
             }
         }
@@ -417,31 +386,20 @@ class FlappyBirdGame {
         var int birdX, birdY, birdWidth, birdHeight;
         var int treatX, treatY, treatWidth, treatHeight;
         var boolean horizontalOverlap, verticalOverlap;
-
         // Only check collision if a treat is actively coming towards the bird
-        if (treat.treatComing() > 0) { // Check if treat is coming
-
+        if (treat.treatComing() > 0) {
             // Get bird dimensions and position
-            let birdX = bird.getXOffset();    // Assume bird has getXOffset() for its left edge
-            let birdY = bird.getYOffset();    // Assume bird has getYOffset() for its top edge
-            let birdWidth = bird.getSizeX();   // Assumes bird has getSizeX()
-            let birdHeight = bird.getSizeY();  // Assumes bird has getSizeY()
-
+            let birdX = bird.getXOffset();
+            let birdY = bird.getYOffset();
+            let birdWidth = bird.getSizeX();
+            let birdHeight = bird.getSizeY();
             // Get treat dimensions and position
-            let treatX = treat.getTreatXpos();   // Assuming Treat class has getTreatXpos()
-            let treatY = treat.getTreatYpos();   // Assuming Treat class has getTreatYpos()
-            let treatWidth = treat.getTreatWidth(); // Assuming Treat class has getTreatWidth()
-            let treatHeight = treat.getTreatHeight(); // Assuming Treat class has getTreatHeight()
-
-
-            // 1. Check for horizontal overlap (AABB collision X-axis)
-            // Bird's right edge > treat's left edge AND Bird's left edge < treat's right edge
-            let horizontalOverlap = ((birdX + birdWidth) > treatX) & (birdX < (treatX + treatWidth));
-
-            // 2. Check for vertical overlap (AABB collision Y-axis)
-            // Bird's bottom edge > treat's top edge AND Bird's top edge < treat's bottom edge
+            let treatX = treat.getTreatXpos();
+            let treatY = treat.getTreatYpos();
+            let treatWidth = treat.getTreatWidth();
+            let treatHeight = treat.getTreatHeight();
+            let horizontalOverlap = ((birdX + birdWidth) > treatX) & (birdX < (treatX + treatWidth))
             let verticalOverlap = ((birdY + birdHeight) > treatY) & (birdY < (treatY + treatHeight));
-
             // Collision occurs if there is both horizontal and vertical overlap
             if (horizontalOverlap & verticalOverlap) {
                 // Collision detected!
@@ -453,15 +411,13 @@ class FlappyBirdGame {
 
     /* Calculate current score based on pipes passed */
     method int calculateScore() {
-        // Simplest scoring: score is the total number of pipes successfully created.
-        // This increments when createNewPipe successfully adds a pipe.
         var int score;
         var int i;
         let score = total_pipes;
         // Subtract pipes that haven't been fully passed yet
         let i = 0;
         while (i < count_pipes) {
-            let pipe = pipes[i]; // Use the field 'pipe'
+            let pipe = pipes[i];
             // If the bird hasn't passed this pipe yet, don't count it in the score
             if (bird.getXOffset() < (pipe.getXOffset() + pipe.getWidthCurrent() + 1)) {
                 let score = score - 1;
@@ -486,10 +442,7 @@ class FlappyBirdGame {
         if (treat.treatOn() = 4) {
             return false; // No collision if invincible
         }
-
-        // Has bird hit the top or bottom of the screen?
-        // Assumes bird.getYOffset() is the top edge and bird.getSizeY() is height
-        if ((bird.getYOffset() < 0) | ((bird.getYOffset() + bird.getSizeY()) > 255)) { // Use < 0 for top, > 255 for bottom
+        if ((bird.getYOffset() < 0) | ((bird.getYOffset() + bird.getSizeY()) > 255)) { 
             return true;
         }
 
@@ -519,29 +472,21 @@ class FlappyBirdGame {
     method boolean collides(Pipe pipe) {
         var int birdX, birdY, birdWidth, birdHeight;
         var int pipeX, pipeWidth, pipeGapTop, pipeGapBottom;
-
         // Get dimensions and positions
-        let birdX = bird.getXOffset(); // Assume bird has getXOffset() for its left edge
-        let birdY = bird.getYOffset(); // Assume bird has getYOffset() for its top edge
-        let birdWidth = bird.getSizeX();  // Assumes bird has getSizeX()
-        let birdHeight = bird.getSizeY(); // Assumes bird has getSizeY()
+        let birdX = bird.getXOffset();
+        let birdY = bird.getYOffset();
+        let birdWidth = bird.getSizeX();
+        let birdHeight = bird.getSizeY();
+        let pipeX = pipe.getXOffset();
+        let pipeWidth = pipe.getWidthCurrent();
+        let pipeGapTop = pipe.getGapTop();
+        let pipeGapBottom = pipe.getGapBottom();
 
-        let pipeX = pipe.getXOffset(); // Assume pipe has getXOffset() for its left edge
-        let pipeWidth = pipe.getWidthCurrent(); // Assume pipe has getWidthCurrent() for its visible width
-        let pipeGapTop = pipe.getGapTop(); // Assume pipe has getGapTop() for the bottom Y of the top pipe piece
-        let pipeGapBottom = pipe.getGapBottom(); // Assume pipe has getGapBottom() for the top Y of the bottom pipe piece
-
-        // 1. Check for horizontal overlap (AABB collision X-axis)
-        // Bird's right edge is past pipe's left edge AND Bird's left edge is before pipe's right edge
         if (((birdX + birdWidth) > pipeX) & (birdX < (pipeX + pipeWidth))) {
-
-            // 2. Check for vertical collision (AABB collision Y-axis)
-            // Bird's top edge is above pipe's top gap OR Bird's bottom edge is below pipe's bottom gap
             if ((birdY < pipeGapTop) | ((birdY + birdHeight) > pipeGapBottom)) {
                 return true; // Collision detected
             }
         }
-
         // No collision with this pipe
         return false;
     }
@@ -549,7 +494,6 @@ class FlappyBirdGame {
     /* Dispose of FlappyBirdGame object and objects created as properties. */
     method void dispose() {
         var int i;
-
         // Dispose pipes
         let i = 0;
         while (i < count_pipes) {
@@ -561,8 +505,6 @@ class FlappyBirdGame {
         }
         // Deallocate the pipes array itself
         do pipes.dispose();
-
-
         // Dispose other objects
         if (~(scoreboard = null)) { do scoreboard.dispose(); }
         if (~(bird = null)) { do bird.dispose(); }
