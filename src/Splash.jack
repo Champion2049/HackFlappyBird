@@ -1,5 +1,5 @@
 class Splash {
-  // show splash
+  // show splash screen
   function void show() {
     do ImageSetUp.blocksSetUp();
     do drawFlappyWord.drawFlappyWord(120, 70);
